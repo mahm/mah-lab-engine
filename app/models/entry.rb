@@ -26,6 +26,7 @@ class Entry
   end
 
   def prepare_content(content_str)
-    @content = content_str
+    @content = RDiscount.new(content_str).to_html
   end
+
 end

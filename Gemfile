@@ -19,6 +19,9 @@ end
 gem 'jquery-rails'
 gem 'haml'
 
+# markdown parser
+gem 'rdiscount'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -34,5 +37,5 @@ group :test do
 end
 
 group :test, :development do
-  gem "rspec-rails", ">= 2.0.1"
+  gem 'rspec-rails', ">= 2.0.1"
 end
