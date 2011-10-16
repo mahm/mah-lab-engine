@@ -1,13 +1,21 @@
+require "sequence"
 require "yaml"
 
 class Entry
-  attr_reader :date, :title, :slug, :content
+  attr_reader :id, :date, :title, :slug, :content, :feed_url, :rel_url
 
   def initialize(filename, str)
     content = split_entry_file(str)
+    prepare_id
     prepare_date(filename)
     prepare_header(content[0])
     prepare_content(content[1])
+    prepare_url
+  end
+
+  def prepare_id
+    # use atom feed building
+    @id = 1
   end
 
   def split_entry_file(str)
@@ -26,7 +34,22 @@ class Entry
   end
 
   def prepare_content(content_str)
-    @content = RDiscount.new(content_str).to_html
+    @content = content_str
   end
 
+  def prepare_url
+    # use atom feed building
+    @feed_url = "http://blog.mah-lab.com/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
+    # use html rendering
+    @rel_url = "#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
+  end
+
+private
+  def four(num)
+    sprintf("%04d", num)
+  end
+
+  def two(num)
+    sprintf("%02d", num)
+  end
 end

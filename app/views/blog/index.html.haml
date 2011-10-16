@@ -1,5 +1,5 @@
-%h1= Blog.instance.source_directory
+%h1 blog.mah-lab.com
 - @entries.each do |entry|
-  %p= entry.date.to_s + " " + entry.title
+  %p= link_to entry.date.to_s + " " + entry.title, entry.rel_url
 
-%p= Blog.instance.page
+

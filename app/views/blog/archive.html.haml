@@ -1,0 +1,4 @@
+%h1 archive
+- @entries.each do |entry|
+  %p= entry.date.to_s + " " + entry.title
+

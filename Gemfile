@@ -18,6 +18,7 @@ end
 
 gem 'jquery-rails'
 gem 'haml'
+gem 'builder'
 
 # markdown parser
 gem 'rdiscount'
