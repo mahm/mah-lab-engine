@@ -20,6 +20,6 @@ class Blog
 
 private
   def create_entry(filename)
-    Entry.new(open(filename).read)
+    Entry.new(filename, open(filename).read)
   end
 end
