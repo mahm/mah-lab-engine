@@ -1,5 +1,6 @@
 class BlogController < ApplicationController
   def index
-    @entries = Blog.instance.entries
+    page = params["page"].to_i || 1
+    @entries = Blog.instance.entries(page)
   end
 end

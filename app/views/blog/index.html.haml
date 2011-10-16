@@ -1,3 +1,5 @@
 %h1= Blog.instance.source_directory
 - @entries.each do |entry|
   %p= entry.date.to_s + " " + entry.title
+
+%p= Blog.instance.page
