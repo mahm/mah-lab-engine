@@ -1,0 +1,53 @@
+title: 玄人向けブログエンジンtotoを使ってブログを作成してみた
+slug: toto
+
+勉強会で@youheiさんにアツいブログエンジンがあるという話を教えて頂いたので、Rackアプリケーションとして動作する、この[toto](https://github.com/cloudhead/toto)というブログエンジンを使ってブログを構築してみることにしました。
+
+ブログとして成り立つギリギリの部分しか実装されていないこのブログエンジンはかなりイケていて、
+
+1. 350行ぐらいで書かれている。
+2. 意外と使っている人がいる（githubのdiscussでそこそこ意見交換されている）
+3. herokuへのデプロイに最適化されている。
+4. 生Rack。
+5. 一応templateもある（dorothy）
+6. 350行ぐらいならハマっても、なんとか自分で対処できそう。
+7. 管理はローカルのコマンドラインで完結する。よくあるブログのうざったい管理画面ともおさらばできる。
+
+と、良い事ずくめです。Bloggerはちょっとした特殊文字が記事の中に入っているだけで怒られるし、いろいろ面倒なので、この際移行してみることにしました。Bloggerの記事はblogger-vimを使用する関係上、そもそもMarkdownで書いていたので、記事の移行もらくちんです（そもそも3つしか記事書いてないし……）。
+
+### Getting start with toto
+
+実際はtoto自体をいじるというよりは、[dorothy](https://github.com/cloudhead/dorothy))というテンプレートを主にいじります。
+
+    $ git clone git://github.com/cloudhead/dorothy.git weblog
+    $ cd weblog/
+    $ git commit -m 'initial commit'
+    # .git/configのremote先を自分のリポジトリに変更する
+    $ git push remote master
+
+とりあえずローカルで動かすなら
+
+    $ shotgun
+
+で立ち上がります。shotgunをお持ちでない方は事前に`gem install shotgun`でインストールして下さい。
+
+次のコマンドでherokuにデプロイできます。
+
+    $ heroku create weblog
+    $ git push heroku master
+    $ heroku open
+
+イケてる！
+
+### いや、でも。。
+
+1. 何故か.gemsファイルにgemの情報が書いてあるよ。Bundler使おうよ。
+2. .rhtmlは微妙だよ。.html.erbにしておこうよ。
+3. そもそもページネーションがないよ！
+4. ジャンル情報もつけられないよ！
+5. タグ？何それ食べれるの？
+6. 動的にMarkdownからhtmlにしているので重いです。。（Rackのcacheは効いている？のかな？）
+
+といった形で、ある機能よりも無い機能の方が多い訳で、自分だけのブログシステムを作っていく楽しみが味わえます（前向き）。このブログにもページネーションを実装していないので作らなきゃいけないですね。ご覧頂く人のためにも、ジャンル情報ぐらいあっても良さそうな気がします。どうせならタグで。
+
+そういうわけで、ちょこちょこといじりながらブログを更新してみたいと思います。

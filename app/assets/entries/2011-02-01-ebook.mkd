@@ -1,0 +1,131 @@
+title: ebookって実際のところどうなのよ（買って読んでみた感想）
+slug: ebook
+
+皆さん、ebook読んでますか！　自炊していますか！　自炊予定の本が自炊しきれていない@mahmです、こんばんは！
+
+日本語の技術書で言えば、オーム社やオライリーがebookを出してくれていますが、まだまだ数が少ない（ほしい本があまりない）上にそこまで割安感もないので、購入を躊躇されている方も多いと思います。筆者も躊躇していたクチで、いろいろと情報を漁ってみてはいたのですが、あまり情報もないのでえいやで買ってしまったクチです。という訳で、「実際のところ、どうなのよ？」をご紹介したいと思います。
+
+-   メリット編
+
+    1.  iPadで読めるのはやっぱり快適！＠通勤電車
+    2.  本の内容を検索できるのは素晴らしい
+    3.  買ってすぐ読める、これは凄い
+
+-   デメリット編
+
+    1.  ピンポイントで開けない
+    2.  目次のついていないebookは頂けない
+    3.  iPadだと、ちょっと非力
+
+-   ここで買えるよ、ebook
+
+    1.  O'Reilly Japan Ebook Store
+    2.  オーム社eStore(β)
+    3.  The Pragmatic Bookshelf
+
+
+## メリット編
+
+### 1. iPadで読めるのはやっぱり快適！＠通勤電車
+
+技術書とは大概クソ重いもの。オライリーのHadoop本ですら、電車の中で読んでいると何の修行をしているんだと思ってしまいますよね。
+
+ebookならiPadに突っ込むだけで、どこででも読めてしまいます。「読みにくいんじゃ？」という人もいるかも知れませんが、筆者は自炊本を含めると20冊ぐらいはiPadで読んでいるので、全くそんなことはないのですよ。
+
+むしろ分厚い本故に家でしか読めず、しかし家に帰ると「もう疲れたー！」と言って結局読まれない本を読むチャンスが増えるというのは何事にも代えがたいと思いませんか。
+
+### 2. 本の内容を検索できるのは素晴らしい
+
+ebookなら本の内容を検索できます。索引をたぐるより素早く目的の場所へ辿り着けます。
+
+また、PCなら複数のebookから横断検索をかけることもできるので、非常に便利ですね。本をgrepするのは中学生の頃の夢でしたが、ようやく叶いつつあるなぁ、と思う今日この頃です。
+
+あわせ技で補助記憶をSSDにすることで更に最強に見えます。
+
+### 3. 買ってすぐ読める、これは凄い
+
+紙の本だと、Amazon
+Primeを使用して本を購入しても最速翌日に届きます。ebookなら、読みたいと思った瞬間読めます。この差は大きいです。
+
+筆者は本当に今すぐ読みたいと思ったら即座に自転車でジュンク堂まで突っ走って本を買いに行くような人間なので、このメリットの価値は計り知れないのです。出社前に「あ、そういえばあの本読みたい。ぽちっとな」でiPadに突っ込んで電車の中で読めるとか、最高だと思いませんか。
+
+## デメリット編
+
+### 1. ピンポイントで開けない
+
+大体本を読んでいると、「たしかこの辺に書いてあったなー」と一発で該当のページを開けちゃったりしまうよね。ebookはそれができません。これが最高にフラストレーションになることがあります。
+
+### 2. 目次のついていないebookは頂けない
+
+某オライリーのebookなのですが、目次がついていません（PDFで言う「しおり」）。これが最高に頂けません。ebookを売り出している業者は、PDFにどんな設定をして売り出しているのか明示すべきです。
+
+### 3. iPadだと、ちょっと非力
+
+筆者は主にiPadでebookを読むのですが、iPadはいささか非力です。自炊本だと特に顕著で、次ページのロードにイライラさせられます。
+
+初見で1ページ1ページゆっくり読んでいるときは気になりませんが、「あ、そういえばあそこにあんなこと書いてあったっけ」と探す際にはイラつくことこの上なしです。Quad
+coreのiPadが欲しいところです。
+
+## ここで買えるよ、ebook
+
+ebookは技術書しか未だ買ったことがないのですが、最後に有名所をご紹介します。
+
+### [O'Reilly Japan Ebook Store](http://www.oreilly.co.jp/ebook/)
+
+
+
+[![image](http://3.bp.blogspot.com/_BnhSDruTT9Q/TUgSC-0hegI/AAAAAAAAAQk/4KQPz56MgYM/s400/fixed2011-02-01_2236.jpg)](http://3.bp.blogspot.com/_BnhSDruTT9Q/TUgSC-0hegI/AAAAAAAAAQk/4KQPz56MgYM/s1600/fixed2011-02-01_2236.jpg)
+
+言わずと知れたオライリーです。先ほども触れた通り目次がないのが頂けませんが、いかんせんラインナップが優秀なので買ってしまいます。オライリーの下僕状態です。
+
+参考までに。これまでオライリーで購入した本は以下の通りです。iPadで読む分には快適に読めました。
+
+-   Rubyベストプラクティス
+-   アプレンティスシップ・パターン
+-   データベース実践講義
+-   プログラミング言語Ruby
+
+### [オーム社eStore(β)](http://estore.ohmsha.co.jp/titles)
+
+
+
+[![image](http://2.bp.blogspot.com/_BnhSDruTT9Q/TUgTe-C48BI/AAAAAAAAAQ8/1anK7UDhtwI/s400/fixed2011-02-01_2242.jpg)](http://2.bp.blogspot.com/_BnhSDruTT9Q/TUgTe-C48BI/AAAAAAAAAQ8/1anK7UDhtwI/s1600/fixed2011-02-01_2242.jpg)
+
+ここでは未だ購入したことがないのですが、順調にラインナップも増えており、今後に期待したいサイトです。買うとしたらマスタリングTCP/IPか。
+
+### [The Pragmatic Bookshelf](https://www.pragprog.com/)
+
+
+
+[![image](http://1.bp.blogspot.com/_BnhSDruTT9Q/TUgTVMRqjWI/AAAAAAAAAQ0/p-4nFDqZSRY/s400/fixed2011-02-01_2244.jpg)](http://1.bp.blogspot.com/_BnhSDruTT9Q/TUgTVMRqjWI/AAAAAAAAAQ0/p-4nFDqZSRY/s1600/fixed2011-02-01_2244.jpg)
+
+最後に、洋書しかありませんが我らがThe Pragmatic
+Bookshelfです。品揃えもさることながら、ダウンロードできるフォーマットとしてepub, mobi(kindle等),
+pdfの3種類を用意しているところが凄いです。ちゃんと目次もついてます。
+
+
+
+[![image](http://3.bp.blogspot.com/_BnhSDruTT9Q/TUgTmTDjqXI/AAAAAAAAARE/7WFeHOSD3IE/s400/fixed2011-02-01_2154.jpg)](http://3.bp.blogspot.com/_BnhSDruTT9Q/TUgTmTDjqXI/AAAAAAAAARE/7WFeHOSD3IE/s1600/fixed2011-02-01_2154.jpg)
+
+上の画像は購入後のダウンロード画面ですが、3種類ともダウンロード可能です。iPadではepubで見て、PCではPDFなんてことも出来るのが素敵です。
+
+余談ですが、epubの洋書をiPadで読む際は、epubの言語設定を「日本語」にしておくと、iBookにて即座に英和辞書が引けます。
+
+
+
+[![image](http://4.bp.blogspot.com/_BnhSDruTT9Q/TUgTsMYROqI/AAAAAAAAARM/EzfPbvvE9OM/s400/fixed2011-02-01_2250.jpg)](http://4.bp.blogspot.com/_BnhSDruTT9Q/TUgTsMYROqI/AAAAAAAAARM/EzfPbvvE9OM/s1600/fixed2011-02-01_2250.jpg)
+
+Sigil
+[http://code.google.com/p/sigil/](http://code.google.com/p/sigil/)
+
+epubの設定をいじるソフトとしてSigilというソフトをおすすめします。epubファイルをSigilでひらいて、メニューから「Tools
+\> Meta
+Editor」選ぶことでepubの言語設定をいじるウィンドウが開きます。ここで言語設定を「Japanese」にすれば、iBookで英和辞書が使えます。あとは辞書を引きたい単語を選択して、辞書を選ぶだけです。
+
+辞書の質がビミョーなのがご愛嬌ですが。。
+
+## 最後に
+
+そんな訳でみんながもっとebookを買ってくれて市場が大きくなると俺得ですので、もっとebookは評価されて良いと思います。
+
+他にも素敵なebook storeがあったら筆者に教えてください！　mentionでもdirect messageでも良いですよ！　なお、kindleのことに全く触れていないのは仕様です。

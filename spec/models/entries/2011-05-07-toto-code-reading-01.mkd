@@ -1,0 +1,350 @@
+title: totoコードリーディングで学ぶRuby on 生Rack 「第1回 totoで使われているライブラリの動作を知ろう」
+slug: toto-code-reading-01
+tags: toto codereading
+
+約350行程度のコードでブログエンジンが実装されている[toto](https://github.com/cloudhead/toto)。このtotoのコードリーディングを通して、Rubyの実践的な使われ方やRackアプリケーションの作成方法を学んでいきたいと思います。第1回目はtotoで使用されている各ライブラリの使われ方を展望します。
+
+### 筆者の環境
+
+OS : MacOSX 10.6.7 (snow leopard)
+
+Ruby : 1.9.2p136
+
+### Get the toto
+
+<div class="usage">Usage:</div>
+
+    $ cd [your work directory]
+    $ git clone https://github.com/cloudhead/toto.git
+
+### totoで使われているライブラリ
+
+#### yaml
+
+Rubyに標準添付されている、YAMLを扱うためのライブラリです。（[YAMLとは？](http://ja.wikipedia.org/wiki/YAML)）
+
+    :::ruby
+    require 'yaml'
+
+<div class="usage">Usage:</div>
+
+    :::ruby
+    # Article < Hashクラス内
+    def load
+      data = if @obj.is_a? String
+        #
+        # ファイル上部のYAMLフォーマット部分と、
+        # 下部のMarkdownフォーマット部分をsplitで分割する。
+        #
+        meta, self[:body] = File.read(@obj).split(/\n\n/, 2)
+
+        # use the date from the filename, or else toto won't find the article
+        @obj =~ /\/(\d{4}-\d{2}-\d{2})[^\/]*$/
+        #
+        # 直前に成功したパターンマッチでn番目のカッコにマッチした
+        # 値が $n に格納される。下記では $1 に値が格納されていれば
+        # :dateに日付を設定し、そうでなければ nil を設定している。
+        #
+        ($1 ? {:date => $1} : {}).merge(YAML.load(meta))
+      elsif @obj.is_a? Hash
+        @obj
+      end.inject({}) {|h, (k,v)| h.merge(k.to_sym => v) }
+
+      self.taint
+      self.update data
+      self[:date] = Date.parse(self[:date].gsub('/', '-')) rescue Date.today
+      self
+    end
+
+totoで読み込まれるarticleファイルは、上部がYAMLフォーマット、下部がMarkdownで記述されます。上記の例では、ファイル名から日付を読み取り、<code>YAML.load</code>で返されるHashオブジェクトとmergeしています。
+
+<div class="usage">例: totoで読み込まれるarticleファイル</div>
+
+    title: The Wonderful Wizard of Oz
+    date: 17/05/1900
+
+    _Once upon a time_...
+
+### date
+
+Rubyに標準添付されている、日付を扱うライブラリ。Dateクラスを使用するためにrequireする必要があります。
+
+    :::ruby
+    require 'date'
+
+<div class="usage">Usage:</div>
+
+    :::ruby
+    # Arctile#load内
+    self[:date] = Date.parse(self[:date].gsub('/', '-')) rescue Date.today
+
+年月日が「/（スラッシュ）」で区切られている場合も「YYYY-MM-DD」の形となるように整形しています。例外が発生した場合は<code>Date.today</code>が実行されるように書かれています。
+
+<div class="usage">Date.todayの返り値は以下のようになります: </div>
+
+    irb > require 'date'
+     => true
+    irb > puts Date.today
+    2011-05-07
+     => nil
+
+時刻を扱うTimeクラスはrequireなしに使えますが、文字列をパースしてTimeクラスのオブジェクトにするメソッドがないため、Dateクラスを使っているのだと考えられます。
+
+### erb
+
+Rubyに標準添付されているテンプレートエンジンです。totoではerbを使用してHTMLファイルが出力されます。
+
+    require 'erb'
+
+<div class="usage">
+Usage: (test/templates/index.rhtml)
+</div>
+
+    :::html
+    <ul id="articles">
+      <% for article in articles[0...3] %>
+        <li><%= article %></li>
+      <% end %>
+    </ul>
+    <div id="archives">
+      <%= archives[3...5] %>
+    </div>
+    <!-- testing env variable passing -->
+    <p>env passed: <%= env != nil %><br/></p>
+    <!-- testing get/post parameter passing -->
+    <p>request method type: <%= env['REQUEST_METHOD'] %><br/></p>
+    <p>request name value pair: <%= env['QUERY_STRING'] %><br/></p>
+
+<code><% %></code>内にRubyのコードを埋め込むことができます。オブジェクト自体の値を使用する場合は<code><%= %></code>の中にコードを記述します。
+
+#### キーポイント: 配列の範囲指定
+
+上記のコードをよく見てみると、配列の範囲指定が<code>..</code>ではなく、<code>...</code>になっています。実際の動作を確認してみると、以下の通りになります。選択される範囲が異なります。動作が紛らわしいので、個人的には<code>..</code>で統一した書き方をしたいところです。
+
+    irb > a = [1, 2, 3, 4, 5]
+     => [1, 2, 3, 4, 5]
+    irb > a[0..3]
+     => [1, 2, 3, 4]
+    irb > a[0...3]
+     => [1, 2, 3]
+
+#### rack
+
+Rackアプリケーションを記述するために読み込みます。今回のキモの部分ですね。標準添付されているライブラリではないので、<code>gem install rack</code>でインストールします。
+
+    require 'rack'
+
+サーバーとなるクラスにcallメソッドを実装するだけでWebアプリケーションを作成することができます。（Rackなんて知らん！という方にはこちらの記事が最高に分かりやすいです：[5分でわかるRack](http://route477.net/d/?date=20080716)）
+
+<div class="usage">
+Usage: (toto.rb)
+</div>
+
+    :::ruby
+    # Toto::Server
+    class Server
+      def call env
+      # （内部構造省略)
+      end
+    end
+
+totoでもServerクラス内にcallメソッドを実装しています。envがリクエストです。内部構造についてはコードリーディングを進める中で追いかけます。
+
+<div class="usage">
+Usage: (test/toto_test.rb)
+</div>
+
+    :::ruby
+    context Toto do
+      setup do
+        @config = Toto::Config.new(:markdown => true, :author => AUTHOR, :url => URL)
+        @toto = Rack::MockRequest.new(Toto::Server.new(@config))
+
+totoのファイル構成内にはconfig.ruがないのですが、テスト内で<code>Rack::MockRequest</code>にてサーバをnewしています。rackupではrunメソッドにサーバのインスタンスを読ませますが、ここでは<code>Rack::MockRequest</code>に読ませることで、以下のようなテストを行えるようにしています。
+
+    :::ruby
+    context "GET /about" do
+      setup { @toto.get('/about') }
+      asserts("returns a 200")                { topic.status }.equals 200
+      asserts("body is not empty")            { not topic.body.empty? }
+      should("have access to @articles")      { topic.body }.includes_html("#count" => /5/)
+    end
+
+<code>http://toto/about</code>といったURLがGETメソッドでリクエストされた際に、どんなレスポンスを返すかテストしているものです。<code>@toto = Rack::MockRequest.new(Toto::Server.new(@config))</code>とすることで、@totoをWebアプリケーションとして扱えるようになります。
+
+#### digest
+
+Rubyに標準添付されているメッセージダイジェストを作成するためのライブラリです。
+
+    require 'digest'
+
+<div class="usage">
+Usage:
+</div>
+
+    # Server#call
+    @response['ETag'] = %("#{Digest::SHA1.hexdigest(response[:body])}")
+
+一つ前に紹介しましたServer#call内で使われています。上記のように@response（Rack::Responseクラスのオブジェクト）のハッシュに値を設定すると、HTTPレスポンスのヘッダに値が設定されます。以下がtotoアプリケーションのHTTPレスポンスの例です。
+
+    Cache-Control:no-cache, must-revalidate
+    Connection:Keep-Alive
+    Content-Length:6212
+    Content-Type:text/html
+    Date:Sat, 07 May 2011 08:26:29 GMT
+    Etag:"c3cbc478c9f0e189ccc5c4fac3db26e667119461"
+    Server:WEBrick/1.3.1 (Ruby/1.9.2/2010-12-25)
+
+これは何のために使われているのかというと、ブラウザ側の判断の材料として使われています。ブラウザはHTTPレスポンスの内容をキャッシュしていますが、キャッシュしてある内容と、これからレスポンスされてくる内容が同じかどうかの判断にHTTPレスポンスのヘッダが使用されます。以下のHTTPリクエストヘッダは、上記のレスポンスが返ってきた後に、もう1度同じURLでリクエストを送った場合の例です。
+
+    Accept:application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+    Accept-Charset:UTF-8,*;q=0.5
+    Accept-Encoding:gzip,deflate,sdch
+    Accept-Language:ja,en-US;q=0.8,en;q=0.6
+    Cache-Control:max-age=0
+    Connection:keep-alive
+    Host:127.0.0.1:9393
+    If-None-Match:"c3cbc478c9f0e189ccc5c4fac3db26e667119461"
+    User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.57 Safari/534.24
+
+If-None-Matchに、レスポンスヘッダのETagと同じ値が設定されています。「「c3cbc478...」というETagのキャッシュを持っていますよ」とサーバに伝えています。サーバ側が「リクエストしてきているブラウザはキャッシュ持っているみたいだから、レスポンスのボディを返す必要はないや」と判断すると、ブラウザに「304 Not Modified」が返り、ブラウザのキャッシュが利用されることになります。
+
+……というのがいわゆるフツーの仕様なのですが、totoは中の処理に成功すると必ず200を返してしまいますので、せっかくETagを設定しているのに304を返しません（ChromeのDeveloper Tools等でモニタリングしてみて下さい）。修正の余地がありますね。
+
+#### digestの説明をしてなくないですか？
+
+メッセージダイジェストとはとどのつまり、与えられた値から1方向（元に戻せない）ハッシュを作成するということです。コード例では<code>response[:body]</code>、つまりレスポンスの内容、つまりHTMLファイルの内容からSHA-1というハッシュ関数を使用して、ハッシュを作成していました。HTMLファイルの内容が変わると、ハッシュの値が変わることになります。つまりキャッシュの判断にも使えるということですね。
+
+#### open-uri
+
+Rubyに標準添付されている、http/ftpに簡単にアクセスするためのクラスです。
+
+    require 'open-uri'
+
+<div class="usage">
+Usage:
+</div>
+
+    :::ruby
+    # Repo < Hashクラス内
+    README = "https://github.com/%s/%s/raw/master/README.%s"
+    def readme
+      markdown open(README %
+        [@config[:github][:user], self[:name], @config[:github][:ext]]).read
+    rescue Timeout::Error, OpenURI::HTTPError => e
+      "This page isn't available."
+    end
+    alias :content readme
+
+totoにはgithubのリポジトリ内のReadmeにアクセスする機能があるのですが、その機能の実現のために使われているようです。openメソッドの引数にURLを指定するとStringIO型のオブジェクトが返ります。そのオブジェクトにreadメッセージを送ると、レスポンスされてきたHTMLファイルの内容を取得することができます。
+
+ちゃんとTimeout::Error例外、OpenURI::HTTPError例外を処理しているあたりが、巷のコードサンプルを読むより勉強になる点ですねえ。
+
+1点気になるのがURLを作成する際のプレースホルダの使い方です。
+
+    README % [@config[:github][:user], self[:name], @config[:github][:ext]]
+
+%演算子でプレースホルダに値を設定できるんだ。。
+
+    irb > TEST = "i love %s %s"
+    => "i love %s %s"
+    irb > TEST % ["cocacola","zero"]
+    => "i love cocacola zero"
+
+はじめて知りました。。
+
+#### marukuとrdiscount
+
+maruku、rdiscount共にMarkdownパーサなのですが、Windowsで動かしている場合はmarukuが選択されるようになっています。<code>gem install maruku</code>または<code>gem install rdiscount</code>でインストールして下さい。
+
+    :::ruby
+    if RUBY_PLATFORM =~ /win32/
+      require 'maruku'
+      Markdown = Maruku
+    else
+      require 'rdiscount'
+    end
+
+marukuをrequireする際に、MarkdownをMarukuに置き換えているところが参考になります。
+
+<div class="usage">
+Usage:
+</div>
+
+    :::ruby
+    # Templateモジュール内
+    def markdown text
+      if (options = @config[:markdown])
+        Markdown.new(text.to_s.strip, *(options.eql?(true) ? [] : options)).to_html
+      else
+        text.strip
+      end
+    end
+
+「あれ、でもrdiscountのREADMEを見ると、RDiscount.newみたいな形の使用例が載っているし、rdiscountをrequireする部分では<code>Markdown = RDiscount</code>って書かなければならないのでは？」
+
+<div class="usage">
+rdiscount/lib/rdiscount.rb
+</div>
+
+    :::ruby
+    Markdown = RDiscount unless defined? Markdown
+
+rdiscount.rb内で、Markdownでも使えるように定義されていました。
+
+#### builder
+
+最後になりました。builderはXMLを作成するためのライブラリです。<code>gem install builder</code>でインストールして下さい。
+
+    require 'builder'
+
+<div class="usage">
+Usage:
+</div>
+
+    :::ruby
+    # Contextクラス内
+    def to_xml page
+      xml = Builder::XmlMarkup.new(:indent => 2)
+      instance_eval File.read("#{Paths[:templates]}/#{page}.builder")
+    end
+    alias :to_atom to_xml
+
+
+totoではRSSファイルを作成するために使われています。実際のフォーマットは「#{page}.builder」で定義されています。<code>instance_eval</code>は引数の文字列をRubyのコードとして評価・実行します。ここでは、「#{page}.builder」ファイルの内容をそのままrubyコードとして実行するという処理になっています。
+
+<div class="usage">
+index.builder:
+</div>
+
+    :::ruby
+    xml.instruct!
+    xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
+      xml.title @config[:title]
+      xml.id @config[:url]
+      xml.updated articles.first[:date].iso8601 unless articles.empty?
+      xml.author { xml.name @config[:author] }
+
+      articles.each do |article|
+        xml.entry do
+          xml.title article.title
+          xml.link "rel" => "alternate", "href" => article.url
+          xml.id article.url
+          xml.published article[:date].iso8601
+          xml.updated article[:date].iso8601
+          xml.author { xml.name @config[:author] }
+          xml.summary article.summary, "type" => "html"
+          xml.content article.body, "type" => "html"
+        end
+      end
+    end
+
+「instance_evalの直前で作られているxmlオブジェクトはどこで使われているんだろう？」答えはinstance_evalで評価されている文字列の中です。
+
+### まとめ
+
+ここまでtotoで使われているライブラリをざっと眺めてきました。特に凄いライブラリを使っている訳でもなく、標準ライブラリを上手に使っている印象で、参考にしやすいコードになっているように見受けられます。「敵を知るには使っているライブラリから攻めろ」と誰かが言っていたのですが、使っているライブラリを見れば大体どんな処理があるか分かるような気がしますね！
+
+さて、次回はRackの処理の部分からディスパッチの部分まで眺めて行きたいと思います。
+
+

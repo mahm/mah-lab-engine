@@ -1,0 +1,223 @@
+title: VimからBloggerへ快適に投稿できるようにする
+slug: vimblogger
+
+※本エントリはマカー専用です。
+
+はてなダイアリーからBloggerに引っ越したのは良いのですが、Bloggerの投稿の仕組みが死ぬほど面倒くさくて全くエントリを投稿していなかった@mahmです。こんにちは！
+
+一般的に、はてな記法に慣れた人間が他のブログツールへ移行すると、あまりの投稿の面倒くささの末にブログ不投稿になると言われています。一種の病です。
+
+そんな病を克服するために、以下のようなフローでエントリを投稿できると良いのではないかと考えました。今回はこの各項目に対する実現方法をご紹介したいと思います。
+
+1.  [Markdown形式](http://ja.wikipedia.org/wiki/Markdown)でエントリを書く。
+2.  Quickrunでどんな感じのHTMLが吐かれるか確認する。
+3.  [blogger.vim](https://github.com/ujihisa/blogger.vim)等のBlogger投稿スクリプトで下書きを投稿する。
+4.  Bloggerのプレビューを見て微修正する。
+5.  エントリを投稿する。
+
+## 1. Markdown形式でエントリを書く。
+
+よく知られたマークアップ言語としてHTMLやTeXがありますが、より人間にとって読み書きしやすいマークアップ言語としてMarkdown形式があります。([参考：「Hack \#52: Markdown形式の文書を書く」](http://vim-users.jp/2009/08/hack52/))
+
+はてな記法をそのまま採用するのも良いですが、はてなダイアリーと別れを告げた人間としては別の記法を採用したいものです。よってMarkdown記法を採用します。
+
+### 導入方法
+
+mkd.vimを使用するのも良いですが、より導入が楽なvim-markdownを筆者は使用しています。
+
+vim-markdown <https://github.com/hallison/vim-markdown>
+
+pathogen.vimを導入している人ならbundleディレクトリ以下で`git clone`するだけでvimプラグインを導入できます。ゆろよろさんの[「Mac OSXでのvim環境整理。.vimrcやらオヌヌメPlug inやらまとめ。」](http://d.hatena.ne.jp/yuroyoro/20101104/1288879591)をご覧頂くと詳しい設定方法が載っています。
+
+ちなみに筆者はゆろよろさんのdotfilesそのものを`git clone`して、カスタムして使用しています。何もかもに疲れた人にはおすすめです。
+
+[![image](http://4.bp.blogspot.com/_BnhSDruTT9Q/TTL8vJJboiI/AAAAAAAAAQA/Gq5cePAE_bo/s400/fixed2011-01-16_1841.jpg)](http://4.bp.blogspot.com/_BnhSDruTT9Q/TTL8vJJboiI/AAAAAAAAAQA/Gq5cePAE_bo/s1600/fixed2011-01-16_1841.jpg)
+
+vim-markdownを導入すると .md .mkd .mkdn .mark\*
+という拡張子のファイルをvimで開いたときにmarkdownというファイルタイプで自動的に読まれ、マークアップ箇所がハイライトされます。READMEファイルはMarkdown記法で書かれていることが多いので、導入するとREADMEも読みやすくなって快適です。（githubではMarkdown記法で書かれたREADMEファイルを自動的にHTMLへ変換して表示してくれます。Markdown記法は覚える価値のある記法です）
+
+Markdown記法の要領については下記のブログで非常に丁寧に説明されています。筆者は今まさに、下記のブログを参照しながらこのエントリを書くことでMarkdown記法を覚えようとしています。
+
+Markdown文法の全訳 <http://blog.2310.net/archives/6>
+
+## 2. Quickrunでどんな感じのHTMLが吐かれるか確認する。
+
+vim-markdownによるハイライトで今書いているMarkdown記法が合っているかどうか大体分かりますが、心配性な人は書いている横で実際にブラウザでプレビューできるとなお嬉しいでしょう。筆者は嬉しいです。
+
+Vimには幸いquickrun.vimというプラグインがあり、このプラグインを使うことで編集中ファイルのファイルタイプに対応したコマンドを、ショートカット`[Leader]r[Space]`を利用して実行することができます。
+
+### 導入方法
+
+まずquickrun.vimをセットアップする必要があります。セットアップ内容については以下のページを参照して下さい。
+
+Hack \#7: 編集中ファイルを実行し、結果を表示したままにする
+<http://vim-users.jp/2009/05/hack7/>
+
+また、ブラウザでプレビューするためにはMarkdown記法をHTMLに変換する仕組みが必要ですので、ここでは[pandoc](http://johnmacfarlane.net/pandoc/index.html)をインストールします。pandocはHaskellで書かれた文章コンバータです。
+
+ここでMacな人はMacPortからインストールできるんだぜ！と言いたいところですが、MacPortにあるpandocはバージョンも古く、何故かbuildに失敗するので、cabalからインストールすることにします。
+
+cabalとはHaskellのパッケージ管理システムです。pandocはHaskellで書かれているプログラムなので、cabalを利用してインストールします。
+
+    % sudo port install hs-platform-cabal
+    % sudo port install hs-happy
+
+Haskell自体をビルドするため非常に時間がかかります（筆者のMacBookで2時間ほどかかりました）。2行のhs-happyはHaskell用のパーサジェネレータです。入れておくとcabalでのビルドが安定して嬉しいらしいので、一緒に入れておきます。
+
+次に待望のpandocをインストールします。
+
+    % cabal install cabal-install
+    % cabal install pandoc
+
+あせらずにcabal自体をアップデートしてからpandocをインストールします。
+
+### これですぐにQuickrun！・・・できるはずが
+
+`:setfiletype markdown`してQuickrunを呼び出したところ、何故か`markdown`というコマンドを呼び出してしまいます。Quickrunはあらかじめ関連付けられていないファイルタイプで実行された場合、ファイルタイプ名のコマンドを呼び出そうとします。風の噂ではQuickrunはmarkdownに標準対応していると聞いたのですが、しょうがないので地力でなんとかすることにしましょう。
+
+    #!/opt/local/bin/zsh
+
+    pandoc -f markdown -t html -o /tmp/_markdown.html $1
+    cat /tmp/_markdown.html
+    open /tmp/_markdown.html
+
+上記のスクリプトを markdown.sh
+という名前で保存し、/usr/local/binにシンボリックリンクを作成します。/saved/dirは保存したディレクトリに読み替えてください。
+
+    % chmod +x markdown.sh
+    % sudo ln -s /saved/dir/markdown.sh /usr/local/bin/markdown
+    % which Markdown
+    /usr/local/bin/markdown
+
+これでQuickrunを使用してMarkdown文章がどんなHTML文章に変換されているか確認しつつ、プレビューをブラウザで行うことが可能になりました。
+
+### 2011/1/24 追記
+
+.vimrcに以下の設定を追加することで、上記のシェルスクリプトの作成が不要になります。と、Quickrun作者のujihisaさんよりコメントを頂きました。ありがとうございます！
+
+    let g:quickrun_config['markdown'] = {
+    \ 'command': 'pandoc',
+    \ 'exec': ['%c -s -f markdown -t html -o %s:p:r.html %s', 'open %s:p:r.html', 'sleep 1', 'rm %s:p:r.html'],
+    \ 'tempfile': '{tempname()}.md'
+    \ }
+
+## 3. blogger.vim等のBlogger投稿スクリプトで下書きを投稿する。
+
+Vimからbloggerへ投稿するプラグインとして、ujihisaさんが作成された[blogger.vim](https://github.com/ujihisa/blogger.vim)があります。これをありがたく使わせて頂きます。
+
+### 導入方法
+
+以下がblogger.vimを使用する前提条件です。
+
+-   vim 7.2+
+    -   [metarw 0.0.3+](http://www.vim.org/scripts/script.php?script_id=2335)
+-   ruby 1.9.2+
+    -   (gem) nokogiri 1.4.2+
+    -   (gem) net-https-wrapper
+-   pandoc 1.2+
+
+pandocは先ほどインストールしましたので、metarwは\~/.vim/bundleディレクトリ以下に`git clone`、gemは`gem install`でインストールしましょう。
+
+blogger.vimのREADMEにblogger.rbとblogger.vimをコピーするように書いてありますが、pathogen.vimを使用している場合は必要ありません。blogger.vimは\~/.vim/bundleディレクトリ以下に`git clone`するだけで良いです。
+
+blogger.vimのインストールまで完了したら、.vimrcを以下のようにセットアップします。
+
+    let g:blogger_blogid = 'your_blogid_here'
+    let g:blogger_email = 'your_email_here'
+    let g:blogger_pass = 'your_blogger_password_here'
+
+.vimrcなどのドットファイルをgithubなどで管理されている方はパスワードが丸見えになりますので、[「Hack \#108: vimrc で外部ファイルを取り込む」](http://vim-users.jp/2009/12/hack108/)でも紹介されている通り、別ファイルでパスワードを管理されると良いでしょう。
+
+### blogger.vimの使い方
+
+[![image](http://3.bp.blogspot.com/_BnhSDruTT9Q/TTL828_jTwI/AAAAAAAAAQI/VqeRMSD18ls/s400/fixed2011-01-16_2111.jpg)](http://3.bp.blogspot.com/_BnhSDruTT9Q/TTL828_jTwI/AAAAAAAAAQI/VqeRMSD18ls/s1600/fixed2011-01-16_2111.jpg)
+
+以下のコマンドを実行するとエントリのリストを取得できます。タイトル部分で`Enter`するとそのエントリの内容を取得でき、更にそのエントリを編集して保存すると、Bloggerのエントリも合わせてアップデートできる親切設計です）
+
+    :e blogger:list
+
+また、編集中のファイルに対して以下のコマンドを実行すると、エントリを投稿することができます。
+
+    :w blogger:create
+
+### ハマりポイント「なんかgemのrequireとかでやたら怒られますよ？」
+
+Rubyのバージョンを[RVM](http://rvm.beginrescueend.com/)で管理していたりするとありがちです。Vimがシステムの方のRubyを実行してしまっています。
+
+こんなこともあろうかと[rvm\_ruby.vim](https://github.com/jcf/rvm_ruby.vim)というプラグインがあるので、上記の問題に突き当たってしまった方はインストールすると良いでしょう。
+
+注意点としてターミナルから実行しないとRVMの設定が有効にならないことが挙げられます。ターミナルから実行するようにしてください。
+
+### 下書きで投稿できるようにする。
+
+blogger.vimには下書きで投稿できる機能はないようなので、若干改造して、タイトルが「DRAFT」で始まるものについては下書きとして投稿するようにします。
+
+`:w blogger:draft`といった形で下書き投稿できるようにしても良かったのですが、.vim側でも.rb側でも「:」以降のコマンドを直にハンドリングしていることもあり、少し大きな改造となりそうだったためです。
+
+githubにあがっているものとの差分は以下の通りです。
+
+    :::diff
+    diff --git a/autoload/metarw/blogger.rb b/autoload/metarw/blogger.rb
+    index 5d21106..5fbbaea 100644
+    --- a/autoload/metarw/blogger.rb
+    +++ b/autoload/metarw/blogger.rb
+    @@ -176,7 +176,8 @@ module Blogger
+           raise RateLimitException if xml.body == "Blog has exceeded rate limit
+           x = Nokogiri::XML(xml.body)
+           raise UnknownError, xml.body unless /published/ =~ x.to_s
+    -      x.at('//xmlns:link[@rel="alternate"]')['href']
+    +      elem = x.at('//xmlns:link[@rel="alternate"]')
+    +      uri = elem != nil ? elem['href'] : "DRAFT"
+       end
+
+       # update :: String -> String -> String -> String -> IO ()
+    @@ -242,16 +243,19 @@ module Blogger
+         body.gsub!(/(\\?)&/) {|s| $1.empty? ? '&' : '&' }
+         title.gsub!(/(\\?)&/) {|s| $1.empty? ? '&' : '&' }
+
+    -    <<-EOF.gsub(/^\s*\|/, '')
+    -    |<entry xmlns='http://www.w3.org/2005/Atom'>
+    +    xml = <<-EOF.gsub(/^\s*\|/, '')
+    +    |<entry xmlns='http://www.w3.org/2005/Atom' xmlns:app='http://purl.org/a
+         |  <title type='text'>#{title.gsub(/&/, '&')}</title>
+         |  <content type='xhtml'>
+         |    <div xmlns="http://www.w3.org/1999/xhtml">
+
+
+         |      #{body}
+         |    </div>|  </content>
+    -    |</entry>
+         EOF
+    +    if title =~ /^DRAFT/
+    +      xml += "<app:control><app:draft>yes</app:draft></app:control>"
+    +    end
+    +    xml += "</entry>"
+       end
+
+
+これで下書きについてもタイトルの先頭に「DRAFT」とつけ`:w blogger:create`とするだけで投稿できるようになりました。
+
+## 4. Bloggerのプレビューを見て微修正する。
+
+そのまんまですね。
+
+## 5. エントリを投稿する。
+
+そのまんまですね。
+
+## 残された課題
+
+- さりげなく載せたスクリーンショットをご覧の通り、筆者の環境で「\#」を使用した行がハイライトされません。何故だー。
+- 画像もまとめて投稿できるとなお良いのですが、大変そうです。
+
+
+## 最後に
+
+無事にVimでBloggerに投稿できるようになりました。Vimの底力には常々驚嘆させられます。
+
+しかし、ここまでの機能が実現できているのは、今もなお精力的にプラグインをコミットして下さっている皆様のおかげです。この場を借りてお礼申し上げます。筆者も何か貢献出来れば良いなぁ、と常々思っております。
+
+いやぁ、Vimって本当に良いものですね。それでは、[rails.vim](https://github.com/tpope/vim-rails)を作成されたTim
+Popeさんの、かの有名な次の一文で最後を締め括りたいと思います。
+
+> TextMate may be the latest craze for developing Ruby on Rails applications, but Vim is forever.
