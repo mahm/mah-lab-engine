@@ -1,5 +1,14 @@
-%h1 blog.mah-lab.com
 - @entries.each do |entry|
-  %p= link_to entry.date.to_s + " " + entry.title, entry.rel_url
-
-
+  %article
+    .article_inner
+      .content
+        %header
+          %h2
+            %a{:href => "#{entry.rel_url}"} #{entry.title}
+          .meta
+            %span.date published at #{entry.date}
+          %p
+            :markdown
+              #{entry.summary}
+          .more
+            %a{:href => "#{entry.rel_url}"} waffle! waffle! &raquo;

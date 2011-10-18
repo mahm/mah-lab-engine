@@ -1,14 +1,14 @@
-require "sequence"
 require "yaml"
 
 class Entry
-  attr_reader :id, :date, :title, :slug, :content, :feed_url, :rel_url
+  attr_reader :id, :date, :title, :slug, :summary, :content, :feed_url, :rel_url
 
   def initialize(filename, str)
     content = split_entry_file(str)
     prepare_id
     prepare_date(filename)
     prepare_header(content[0])
+    prepare_summary(content[1])
     prepare_content(content[1])
     prepare_url
   end
@@ -33,6 +33,10 @@ class Entry
     @slug  = yaml["slug"]
   end
 
+  def prepare_summary(content_str)
+    @summary = content_str.match(/.*\n/)
+  end
+
   def prepare_content(content_str)
     @content = content_str
   end
@@ -41,7 +45,7 @@ class Entry
     # use atom feed building
     @feed_url = "http://blog.mah-lab.com/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
     # use html rendering
-    @rel_url = "#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
+    @rel_url = "/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
   end
 
 private

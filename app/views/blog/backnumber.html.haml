@@ -1,0 +1,10 @@
+- break_key = Date.new
+- @entries.each do |entry|
+  - unless entry.date.year == break_key.year && entry.date.month == break_key.month
+    %h2.backnumber
+      #{entry.date.year}.#{entry.date.month}
+    - break_key = entry.date
+    .backnumber_line
+  .content
+    %h4.backnumber
+      %a{:href => "#{entry.rel_url}"} #{entry.title}
