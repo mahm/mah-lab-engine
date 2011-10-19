@@ -1,4 +1,6 @@
+# coding: utf-8
 require "yaml"
+require "iconv"
 
 class Entry
   attr_reader :id, :date, :title, :slug, :summary, :content, :feed_url, :rel_url
@@ -34,11 +36,30 @@ class Entry
   end
 
   def prepare_summary(content_str)
-    @summary = content_str.match(/.*\n/)
+    @summary = markdown(content_str.match(/.*\n/).to_s)
   end
 
   def prepare_content(content_str)
-    @content = content_str
+    @content = coderay(code_syntax_filter(markdown(content_str)))
+  end
+
+  def markdown(str)
+    RDiscount.new(str, :smart).to_html
+  end
+
+  def coderay(html)
+    force_change_to_utf8(html).gsub(/\<pre>\<code( lang="(.+?)")?\>(.+?)\<\/code\>\<\/pre\>/m) do
+      # CodeRay.scan($3.strip, $2).div(:css => :class)
+      "<pre>#{$3.strip}</pre>"
+    end
+  end
+
+  def code_syntax_filter(html)
+    force_change_to_utf8(html).gsub(/\<pre\>\<code\>:::(.+)/, '<pre><code lang="\1">')
+  end
+
+  def force_change_to_utf8(str)
+    Iconv.new('UTF-8//IGNORE', 'UTF-8').iconv(str)
   end
 
   def prepare_url

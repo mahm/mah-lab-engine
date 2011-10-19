@@ -13,7 +13,7 @@ atom_feed(:language => "ja-JP",
       :published => e.date,
       :updated => e.date) do |item|
       item.title(e.title)
-      item.content(:type => 'html'){item.cdata! RDiscount.new(e.content).to_html}
+      item.content(:type => 'html'){item.cdata! raw(e.content)}
       item.author{|author| author.name("mah_lab")}
     end
   end

@@ -8,7 +8,6 @@
           .meta
             %span.date published at #{entry.date}
           %p
-            :markdown
-              #{entry.summary}
+            #{raw entry.summary}
           .more
             %a{:href => "#{entry.rel_url}"} waffle! waffle! &raquo;
