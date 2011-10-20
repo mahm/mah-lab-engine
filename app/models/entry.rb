@@ -64,9 +64,9 @@ class Entry
 
   def prepare_url
     # use atom feed building
-    @feed_url = "http://blog.mah-lab.com/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
+    @feed_url = "http://blog.mah-lab.com/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}/"
     # use html rendering
-    @rel_url = "/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}"
+    @rel_url = "/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}/"
   end
 
 private

@@ -7,6 +7,12 @@ gem 'rails', '3.1.0'
 
 gem 'sqlite3'
 
+# for heroku Deploy
+group :production do
+  gem 'pg'
+  gem 'execjs'
+  gem 'therubyracer'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

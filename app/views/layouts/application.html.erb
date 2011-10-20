@@ -34,6 +34,14 @@
 </head>
 
 <body class="home">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=207966559246407";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <div id="page">
   <header id="head">
@@ -48,25 +56,21 @@
   </div>
   <footer id="foot">
     <div class="foot_inner">
-      <div class="hasGrid">
-        <div class="left">
-          <h4>about</h4>
-          <p>Ruby / Rails / Vim / System Development / Pon de Lionといったことを @mah_lab が書き綴るBlogです。「もう、Railsが動かないサーバがないなんて言わせない」でおなじみのheroku様の提供でお送りしております。</p>
-          <p>タイトルのポンデライオンは <a href="http://twitter.com/minus13">@minus13</a> が描いてくれました。</p>
-          <p>powered by <a href="https://github.com/mahm/mah-lab-engine">mah-lab-engine</a> on <a href="http://heroku.com/">heroku</a>
-        </div>
-        <div class="right">
-          <h4>elsewhere</h4>
-          <ul>
-            <li><a href="/backnumber">back number</a> / 過去の記事</li>
-            <li><a href="http://twitter.com/mah_lab">twitter</a> / 赤裸々すぎるtweetばかりしています</li>
-            <li><a href="http://github.com/mahm">github</a> / fork気味です</li>
-            <li><a href="/index.xml">rss feed</a> / RSSなのですよ</li>
-          </ul>
-          <h4>contact</h4>
-          <p>ご意見・ご感想は rootmoon at gmail.com まで。お待ちしています。twitterでもお気軽にmentionを送ってください。</p>
-        </div>
-      </div>
+      <h4>about</h4>
+      <p>Ruby / Rails / Vim / System Development / Pon de Lionといったことを @mah_lab が書き綴るBlogです。「もう、Railsが動かないサーバがないなんて言わせない」でおなじみのheroku様の提供でお送りしております。</p>
+      <p>タイトルのポンデライオンは <a href="http://twitter.com/minus13">@minus13</a> が描いてくれました。</p>
+      <p>powered by <a href="https://github.com/mahm/mah-lab-engine">mah-lab-engine</a> on <a href="http://heroku.com/">heroku</a></p>
+      <h4>elsewhere</h4>
+      <ul>
+        <li><a href="/">index</a> / トップページへ戻ります</li>
+        <li><a href="/backnumber">back number</a> / 過去の記事</li>
+        <li><a href="http://twitter.com/mah_lab">twitter</a> / 赤裸々すぎるtweetばかりしています</li>
+        <li><a href="http://github.com/mahm">github</a> / fork気味です</li>
+        <li><a href="/index.xml">rss feed</a> / RSSなのですよ</li>
+      </ul>
+      <h4>contact</h4>
+      <p>ご意見・ご感想は rootmoon at gmail.com まで。お待ちしています。twitterでもお気軽にmentionを送ってください。</p>
+      <p></p>
     </div>
   </footer>
 </div> <!--! end of #container -->
