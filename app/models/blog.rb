@@ -23,7 +23,7 @@ class Blog
   def entries(page)
     offset = @@paginate * (page - 1) > (self.size - 1) ? @@paginate * (self.page - 1) : @@paginate * (page - 1)
     max = offset + @@paginate > (self.size - 1) ? (self.size - 1) : offset + @@paginate - 1
-    @entries.reverse[offset..max]
+    @entries.sort{|a, b| b.date <=> a.date}[offset..max]
   end
 
   def page
@@ -43,7 +43,7 @@ class Blog
   end
 
   def backnumber
-    @entries.reverse
+    @entries.sort{|a, b| b.date <=> a.date}
   end
 
   def archive(year, month, day)
@@ -60,7 +60,7 @@ class Blog
       entries = @entries.select{|entry| entry.date.year == year.to_i && entry.date.month == month.to_i && entry.date.day == day.to_i}
     end
     return nil if entries.size < 1
-    entries.reverse
+    entries.sort{|a, b| b.date <=> a.date}
   end
 
   # 1900-4712
