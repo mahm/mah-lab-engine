@@ -14,19 +14,19 @@ class BlogController < ApplicationController
 
   def archive
     @entries = Blog.instance.archive(params[:year], params[:month], params[:day])
-    @title = "blog.mah-lab.com - archive"
+    @title = "archive - blog.mah-lab.com"
     render :nothing => true, :status => 404 unless @entries
   end
 
   def entry
     @entry = Blog.instance.entry(params[:year], params[:month], params[:day], params[:slug])
-    @title = @entry.title
+    @title = @entry.title + " - blog.mah-lab.com"
     render :nothing => true, :status => 404 unless @entry
   end
 
   def backnumber
     @entries = Blog.instance.backnumber
-    @title = "blog.mah-lab.com - back number"
+    @title = "back number - blog.mah-lab.com"
     render :nothing => true, :status => 404 unless @entries
   end
 end

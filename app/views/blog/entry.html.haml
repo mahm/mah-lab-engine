@@ -1,10 +1,12 @@
 %article
   .article_inner
     .content
-      %header
+      %header#title
         %h2= @entry.title
         .meta
           %span.date published at #{@entry.date}
-        %section.content
-          #{raw @entry.content}
-        <!-- X:S ZenBackWidget --><script type="text/javascript">document.write(unescape("%3Cscript")+" src='http://widget.zenback.jp/?base_uri=http%3A//blog.mah-lab.com&nsid=96954274717664984%3A%3A96954281160139513&rand="+Math.ceil((new Date()*1)*Math.random())+"' type='text/javascript'"+unescape("%3E%3C/script%3E"));</script><!-- X:E ZenBackWidget -->
+        <a href="#{hatena_url(@entry.feed_url)}" class="hatena-bookmark-button" data-hatena-bookmark-title="#{@title}" data-hatena-bookmark-layout="vertical" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+        <div class="fb-like" data-href="#{facebook_url(@entry.feed_url)}" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true" data-font="lucida grande"></div>
+      %section.content
+        #{raw @entry.content}
+      <!-- X:S ZenBackWidget --><script type="text/javascript">document.write(unescape("%3Cscript")+" src='http://widget.zenback.jp/?base_uri=http%3A//blog.mah-lab.com&nsid=96954274717664984%3A%3A96954281160139513&rand="+Math.ceil((new Date()*1)*Math.random())+"' type='text/javascript'"+unescape("%3E%3C/script%3E"));</script><!-- X:E ZenBackWidget -->

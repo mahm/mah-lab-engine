@@ -8,3 +8,5 @@
   .content
     %h4.backnumber
       %a{:href => "#{entry.rel_url}"} #{entry.title}
+      %a{:href => "#{hatena_url(entry.feed_url)}"}
+        %img{:src => "http://b.hatena.ne.jp/entry/image/#{entry.feed_url}"}

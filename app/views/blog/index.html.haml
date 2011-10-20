@@ -1,5 +1,7 @@
+#backnumber
+  %a{:href => "/backnumber"} バックナンバーを見る &raquo;
 - @entries.each do |entry|
-  %article
+  %article.index
     .article_inner
       .content
         %header
@@ -7,7 +9,5 @@
             %a{:href => "#{entry.rel_url}"} #{entry.title}
           .meta
             %span.date published at #{entry.date}
-          %p
-            #{raw entry.summary}
-          .more
-            %a{:href => "#{entry.rel_url}"} waffle! waffle! &raquo;
+        %p
+          #{raw entry.summary}
