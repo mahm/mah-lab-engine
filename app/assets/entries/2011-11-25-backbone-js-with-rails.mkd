@@ -1,0 +1,14 @@
+title: 社内でbackbone.js with Rails勉強会
+slug: backbone-js-with-rails
+
+backbone.js + Rails3.1で作成したサイト「best vimrc」を題材にSonicGarden社内で勉強会を開催しました。
+
+<a href="http://best-vimrc.heroku.com"><img src="/assets/best-vimrc.png" width="500" /></a>
+
+結果的に「クライアントサイドのコードを無理にMVCで書く理由が分からない。もっとシンプルで分かりやすいアーキテクチャがあるのでは？」という話に落ち着きましたが、サーバ側がRailsでフルAjaxなアプリを作る際には、backbone.js + Railsはgemが充実しているので良い選択肢なのかなという気がしています。
+
+<a title="View Getting Start backbone.js with Rails on Scribd" href="http://www.scribd.com/doc/73702841/Getting-Start-backbone-js-with-Rails" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">Getting Start backbone.js with Rails</a><iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/73702841/content?start_page=1&view_mode=slideshow&access_key=key-1i2eeheytks8p0atl6pu" data-auto-height="true" data-aspect-ratio="1.33333333333333" scrolling="no" id="doc_55949" width="100%" height="600" frameborder="0"></iframe><script type="text/javascript">(function() { var scribd = document.createElement("script"); scribd.type = "text/javascript"; scribd.async = true; scribd.src = "http://www.scribd.com/javascripts/embed_code/inject.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(scribd, s); })();</script>
+
+次はknockout.js + Sinatraの組み合わせを試してみよう。
+
+[「best vimrc」のソースコードはgithubにあげてありますので、興味のある方はご覧下さい。](https://github.com/mahm/best-vimrc)
