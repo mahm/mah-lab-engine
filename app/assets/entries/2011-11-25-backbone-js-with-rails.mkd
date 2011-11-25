@@ -1,7 +1,7 @@
-title: 社内でbackbone.js with Rails勉強会
+title: 社内でbackbone.js with Rails勉強会を開催しました
 slug: backbone-js-with-rails
 
-backbone.js + Rails3.1で作成したサイト「best vimrc」を題材にSonicGarden社内で勉強会を開催しました。
+backbone.js + Rails3.1で作成したサイト「best vimrc」を題材にSonicGarden社内で勉強会を開催しました。ustreamされながら話すのは緊張しますねー。。
 
 <a href="http://best-vimrc.heroku.com"><img src="/assets/best-vimrc.png" width="500" /></a>
 
