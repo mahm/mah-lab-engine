@@ -1,0 +1,29 @@
+title: RedisのPub/Subは面白そう at Kitazawa.rb #10
+slug: kitazawa-rb-10
+
+11/26(土)はKitazawa.rbの日でした。地域技術者コミュニティとしてゆるく活動しているKitazawa.rbですが、ついに10回目になりました。会場は[OpenSource Cafe](http://www.osscafe.net/)。勉強会用に場所を借りるのは別料金のようですが、オープンソースに関連した話だと半額になるようです。一応Rubyのコミュニティなので、半額にしてもらいました。ありがとうございました！
+
+発表ネタがあったのは[@yoheiさん](http://about.me/youhei)のRedisの話とbackbone.js。backbone.jsの話は@mah_labが先日話したものの焼き増しです。
+
+### Redisの話
+
+Redisとは永続化に対応しているインメモリDB(KVS)です。[memcachedよりも速いという話](http://antirez.com/post/redis-memcached-benchmark.html)。爆速ですね。
+
+基本はcacheサーバとして使うと思うのですが、[Instagramは写真とユーザの紐付きをRedisで永続化しているようです](http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs)。とはいえ、Redisは単純すぎるKVSのためそのままクラスタ構成を取ることができないため、EC2のハイメモリタイプを使うというスケールアップで実現しているようです。
+
+#### herokuでも使えます
+
+[Redis To Go](http://devcenter.heroku.com/articles/redistogo)というアドオンを使えばherokuでもredisを使うことができます。herokuかわいいよheroku。
+
+#### Pub/Subが気になる
+
+ところでRedisはPub/Sub型の通信をサポートしています。Pub/Sub型通信というのは、メッセージを作成して送信する送信側サーバをPublisher、受信する側のクライアントをSubscriberとするメッセージングモデルのことです。KVSにこういった機能が備わっているのは珍しいらしく、リアルタイムWebが注目される昨今ではかなり使えそうな機能です。
+
+というのも、Redisを中継サーバとすることでWebSocketサーバをスケールアウトさせることができるからです。
+
+EventMachineでWebSocketサーバを立てた時の例：[PubSubbin' with Redis, EventMachine, and WebSockets](http://jessedearing.com/nodes/4-pubsubbin-with-redis-eventmachine-and-websockets)
+
+node.jsでWebSocketサーバを立てた時の例：[Redis の Pub/Sub を使って Node.js + WebSocket のスケールアウトを実現する方法](http://firn.jp/2011/06/19/nodejs-redis-pubsub)
+
+そのうちリアルタイムWebを活用したサービスもやってみたいですねえ。
+
