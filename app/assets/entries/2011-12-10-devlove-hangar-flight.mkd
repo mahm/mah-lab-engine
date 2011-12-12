@@ -1,0 +1,78 @@
+title: DevLove HangerFlightに行って来ました
+slug: devlove-hanger-flight
+
+12/10(土)はDevLove主催のHangerFlightというイベントの日でした。「ブログを書くまでが勉強会」なので、得たものをブログにまとめてみます。
+
+<a href="http://kokucheese.com/event/index/21611/"><img src="/assets/20111210_devlove.jpg" width="500" /></a>
+
+### 行ったセッション
+
+* 第1波 : サービスエンジニアとして何を考えていくのか
+* 第2波 : 受託プログラマの進路〜アジャイルセールスと手塚モデル〜
+* 第3波 : マーケットという大空を飛ぶためにユーザーストーリーという地図を携えて
+* 第4波 : 実践DDD Quick Replay
+
+正直全部見たいセッションばかりで選ぶのにえらい苦労しました。これだけの人を集めてくるとはDevLoveさすがですね。
+
+### 第1波 : サービスエンジニアとして何を考えていくのか
+
+アメーバピグライフの中の人、[@kuwa_tw](https://twitter.com/#!/kuwa_tw)さんのお話。DevLoveでは珍しいらしいインフラの話。確かにDevLoveに集まる人は、アプリの人が多い気がする。
+
+アメーバピグライフはnode.js + mongoDBで動いているらしく、なかなか尖っているなぁ、という感じ。規模が小さいうちはチャレンジ + スピード感、大きくなったら安定運用 + スピード感といった指標で動いているらしい。いずれにしてもスピード感が必要、というのはその通りで、規模が大きくなってもスピード感を保つためには小さい規模のうちからのチャレンジがやはり必要なんだろうな、と思います。
+
+自動化の方法はtomahawkだとかchefだとか、おなじみの手法ですが、重要なのはプログラマブルにインフラを管理していくということでしょう。少ない人数でサービスを安定稼働させるには重要な視点ですね。
+
+質疑応答で「アプリケーションエンジニアとしてインフラを安定稼働させるために出来ることは何か？」という質問をしました。障害復旧時には「障害時に何が起こっていたのか」という情報が重要であるため、そういったことがログから分かるような作りにしておいてもらえると、インフラとしてはありがたいとのこと。ロギング重要。アプリとインフラが分かれている現場では、ログ設計に関してちゃんとコミュニケーションを取ることで、障害復旧時間の短縮に貢献できそうです。
+
+### 第2波 : 受託プログラマの進路〜アジャイルセールスと手塚モデル〜
+
+<div style="width:425px; margin-left: 160px;" id="__ss_10548100"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/kawasima/ss-10548100" title="受託プログラマの進路　〜アジャイルセールスと手塚モデル〜" target="_blank">受託プログラマの進路　〜アジャイルセールスと手塚モデル〜</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/10548100" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/kawasima" target="_blank">yoshitka kawashima</a> </div> </div>
+
+海岸沿いのSIerの中の人、[@kawasima](https://twitter.com/#!/kawasima)さんのお話。
+
+ソフトウェア開発とマンガ制作は似ている、という話から手塚プロダクションの作業モデルを引き出し、それをソフトウェア開発の作業モデルに転化させるところに感銘を受けました。この手塚モデルはOJTにかなり有効ですね。詳しくはスライドで。
+
+実践にあたっては、まずは「MTG手順をセリフまで決める」「スプリントレビューを手順化する」という所に踏み込むと良さそうですね。MTGはリズム。ちょっとしたことでリズムが崩れ、なし崩し的に長時間のMTGになりがち＆新人沈黙ということはよくある話で、日々のMTGにリズムを与えるだけでも目に見える効果がありそう。
+
+アジャイルセールス憲章に共感。むしろ実践しています。
+
+    アジャイルセールス憲章
+    ・こまごまと書いたTo-Beよりも、動くプロトタイプを
+    ・前提条件/制約条件よりも、システムがビジネスを変える可能性を示すことを
+
+セッション後、「アプレンティスにパターン化された仕事を振るって言っても、やっぱり作りすぎちゃいますよねえ」という話を@kawasimaさんにして、「やっぱりそうだよねえ」という話に。さじ加減が課題。
+
+### 第3波 : マーケットという大空を飛ぶためにユーザーストーリーという地図を携えて
+
+<div style="width:425px; margin-left: 160px" id="__ss_10548415"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/wackiesrock/devlove1210-wackiesrock-10548415" title="Devlove1210 wackiesrock" target="_blank">Devlove1210 wackiesrock</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/10548415" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/wackiesrock" target="_blank">Yoshinori Wakizaka</a> </div> </div>
+
+楽天の中の人、[@wackiesrock](https://twitter.com/#!/wackiesrock)さんのお話。
+
+User Experience(UX)とは製品の価値を設計するためのもので、ユーザーストーリーを上手く使えば、より良いUXを設計できるよ！という内容。特にユーザのサービス使用経験が一つの機器に閉じなくなってきている中、どういったコンテキストでサービスが使用されるかをおさえて、デザインに転化することは重要ですね。
+
+UserStoryMappingについてはAgileUCDで学ばせてもらいましたが、[ExperienceJourneyMap](http://experience-journey-lab.com/)は初めて見ました。凄くいいですね。ただ、作るのは大変そう。。
+
+UXについては多少見聞きしている訳ですが、スタートアップで取り組むには、ちょっとヘビーだなぁと思うことがあります。そんな訳で、セッションの最後に「小さいサービサーがUXに取り組みたいと思ったときに、どこからはじめるべきか？」という質問をしてみました。ニュアンスが異なっていたら申し訳ないのですが、以下のような返答を頂きました。
+
+* まずコンセプトを可視化する
+* コンセプトを実現するための最低限のペルソナとストーリーを用意する（コンセプトが製品の核であるため、コンセプトの説得力の肉付けをまず行うようにする）
+* プロトタイピングによってストーリーを磨いていく
+* ある程度成長したら、インタビューなどの手法で客観的にストーリーを見直す
+
+プロトタイピング中にユーザーストーリーからユーザビリティテストのタスクシナリオを抽出してユーザビリティテストを行うことで、更に洗練させていくことができそうです。
+
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=cuffdesiglab-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=4621084593" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+### 第4波 : 実践DDD Quick Replay
+
+[@haradakiro先生](https://twitter.com/#!/haradakiro)によるドメイン駆動設計実演。在庫管理システムをモデルとして、どんどん模造紙に設計を書いていくというパフォーマンス。
+
+モデルを小さくはじめる => リファクタリング => 成長させる => リファクタリングという形を取ることで、柔軟なモデルをちゃんと設計することができるんだよ、ということが強く伝わりました。DDD本をまたちゃんと読みたいなぁ。
+
+ただ、在庫管理のそもそもの業務が前提として伝わっていないと、わかりにくい話だったかも。
+
+### その後
+
+参加者全体の盛大な振り返りの後、更に懇親会で盛大に酔いつぶれていましたが、話しかけて下さったいろんな方がSonicGardenに関心をもって下さっていて、とてもありがたい事だと感じました。名刺を交換させて頂いた方々、今度またまともにお話する機会を下さい。。
+
+そんなこんなで大変得るものが多かったDevLove HangarFlight、運営の皆様、大変お疲れ様でした＆ありがとうございました！
