@@ -1,7 +1,7 @@
-title: ブログを書くまでが勉強会！ DevLove HangerFlightに行って来ました
-slug: devlove-hanger-flight
+title: ブログを書くまでが勉強会！ DevLove HangarFlightに行って来ました
+slug: devlove-hangar-flight
 
-12/10(土)はDevLove主催のHangerFlightというイベントの日でした。「ブログを書くまでが勉強会」なので、得たものをブログにまとめてみます。
+12/10(土)はDevLove主催のHangarFlightというイベントの日でした。「ブログを書くまでが勉強会」なので、得たものをブログにまとめてみます。
 
 <a href="http://kokucheese.com/event/index/21611/"><img src="/assets/20111210_devlove.jpg" width="500" /></a>
 
