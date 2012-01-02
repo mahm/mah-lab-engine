@@ -32,6 +32,9 @@ gem 'rdiscount'
 # enable code highlighting
 gem 'coderay'
 
+gem 'erb2haml', :group => :development
+gem 'compass', "~> 0.12.alpha.3"
+
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false

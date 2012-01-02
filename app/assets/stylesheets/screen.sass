@@ -1,0 +1,82 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import "blueprint/reset"
+
+// To configure blueprint, edit the partials/base.sass file.
+@import "partials/base"
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import "blueprint"
+@import "blueprint/liquid"
+
+@include blueprint
+
+body
+  background-image: url(/assets/light_bg.png)
+
+// If you are doing a lot of stylesheet concatenation, it is suggested
+// that you scope your blueprint styles, so that you can better control
+// what pages use blueprint when stylesheets are concatenated together.
+body.bp
+  @include blueprint-typography(true)
+  @include blueprint-utilities
+  @include blueprint-debug
+  @include blueprint-interaction
+
+form.bp
+  @include blueprint-form
+
+// Page layout can be done using mixins applied to your semantic classes and IDs:
+body.two-col
+  $sidebar-grid: 2
+  $bookmark-grid: 4
+  $content-grid: $blueprint-grid-columns - $sidebar-grid * 2 - $bookmark-grid
+  @include blueprint-liquid-grid
+  #container
+    @include container
+    width: 100%
+    text-align: left
+  #header, #main, #footer
+    @include column($blueprint-grid-columns)
+  #main
+    .sidebar-left
+      @include column($sidebar-grid)
+    .sidebar-right
+      @include column($sidebar-grid)
+      @include last
+    .bookmark
+      @include column($bookmark-grid)
+      text-align: right
+    .content
+      @include column($content-grid)
+
+#header
+  position: relative
+  #header_top
+    padding: 4px 18px
+    img
+      margin-right: 6px
+  #header_line
+    height: 2px
+    background-image: url(/assets/header_top_border_bg.png)
+  #header_bottom
+    height: 133px
+    background-image: url(/assets/header_bg.png)
+    img
+      margin-left: 33px
+      margin-top: 41px
+  #header_right_image
+    float: right
+    position: absolute
+    width: 314px
+    height: 177px
+    background-image: url(/assets/header_right_bg.png)
+    top: 0px
+    right: 0px
+    overflow: hidden
+
+#main
+  p
+    font-size: 14px
+    line-height: 1.6em
+  .article
+    margin-top: 24px
