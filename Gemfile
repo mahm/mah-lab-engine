@@ -5,10 +5,6 @@ gem 'rails', '3.1.3'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-group :development, :test do
-  gem 'sqlite3'
-end
-
 # for heroku Deploy
 group :production do
   gem 'pg'
@@ -37,11 +33,14 @@ gem 'coderay'
 gem 'erb2haml', :group => :development
 gem 'compass', "~> 0.12.alpha.3"
 
+gem 'heroku_san', :group => :development
+
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
 
 group :test, :development do
+  gem 'sqlite3'
   gem 'rspec-rails', ">= 2.0.1"
 end
