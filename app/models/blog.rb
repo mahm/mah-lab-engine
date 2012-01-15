@@ -25,6 +25,9 @@ class Blog
     max = offset + @@paginate > (self.size - 1) ? (self.size - 1) : offset + @@paginate - 1
     @entries.sort{|a, b| b.date <=> a.date}[offset..max]
   end
+  def all
+    @entries.sort{|a, b| b.date <=> a.date}
+  end
 
   def page
     (@entries.size / @@paginate.to_f).ceil

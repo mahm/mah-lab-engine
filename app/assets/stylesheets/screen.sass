@@ -7,64 +7,68 @@
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint"
 @import "blueprint/liquid"
+@import "compass/css3"
+@import "compass/typography/text/replacement"
 
 @include blueprint
 
+$default-text-shadow-blur: 3px
+$default-text-shadow-v-offset: 1px
+
 body
-  background-image: url(/assets/light_bg.png)
+  background-image: url(/assets/footer_bg.gif)
+  color: #796e6e - #444
 
 // If you are doing a lot of stylesheet concatenation, it is suggested
 // that you scope your blueprint styles, so that you can better control
 // what pages use blueprint when stylesheets are concatenated together.
 body.bp
-  @include blueprint-typography(true)
   @include blueprint-utilities
   @include blueprint-debug
   @include blueprint-interaction
 
-form.bp
+form
   @include blueprint-form
 
 // Page layout can be done using mixins applied to your semantic classes and IDs:
 body.two-col
-  $sidebar-grid: 2
-  $bookmark-grid: 4
+  $sidebar-grid: 3
+  $bookmark-grid: 3
   $content-grid: $blueprint-grid-columns - $sidebar-grid * 2 - $bookmark-grid
-  @include blueprint-liquid-grid
   #container
     @include container
-    width: 100%
     text-align: left
   #header, #main, #footer
     @include column($blueprint-grid-columns)
   #main
-    .sidebar-left
-      @include column($sidebar-grid)
-    .sidebar-right
-      @include column($sidebar-grid)
-      @include last
-    .bookmark
-      @include column($bookmark-grid)
-      text-align: right
-    .content
-      @include column($content-grid)
+    .article
+      @include column($blueprint-grid-columns)
+      .sidebar-left
+        @include column($sidebar-grid)
+      .sidebar-right
+        @include column($sidebar-grid)
+        @include last
+      .bookmark
+        @include column($bookmark-grid)
+        text-align: right
+      .content
+        @include column($content-grid)
+        overflow: visible
 
 #header
+  background-image: url(/assets/light_bg.png)
   position: relative
-  #header_top
+  #header-top
     padding: 4px 18px
     img
       margin-right: 6px
-  #header_line
+  #header-line
     height: 2px
     background-image: url(/assets/header_top_border_bg.png)
-  #header_bottom
+  #header-bottom
     height: 133px
     background-image: url(/assets/header_bg.png)
-    img
-      margin-left: 33px
-      margin-top: 41px
-  #header_right_image
+  #header-right-image
     float: right
     position: absolute
     width: 314px
@@ -73,10 +77,166 @@ body.two-col
     top: 0px
     right: 0px
     overflow: hidden
+  h1
+    @include replace-text("/assets/mah-lab_title.png")
+    width: 252px
+    height: 52px
+    position: relative
+    left: 33px
+    top: 41px
+  a, a:hover, a:visited, a:active
+    text-decoration: none
 
 #main
+  a:link, a:visited
+    color: #865050
+  a:hover, a:active
+    color: #b58681
+  @include single-box-shadow(#333, -2px, 0, 12px, 12px)
+  letter-spacing: 1px
+  h2
+    @include text-shadow
+  h2.backnumber
+    clear: both
+    background-color: #e3e0cb
+    color: #73a673
+    border:
+      top: 1px solid #eff2ea
+      bottom: 1px solid #eff2ea
+    margin: 0
+    padding:
+      top: 12px
+      bottom: 12px
+      left: 18px
+  h2.entry
+    clear: both
   p
-    font-size: 14px
+    font-size: 1.2em
     line-height: 1.6em
   .article
-    margin-top: 24px
+    padding-top: 24px
+  .light
+    background-image: url(/assets/light_bg.png)
+  .dark
+    background-image: url(/assets/dark_bg.png)
+  .entry-header
+    border:
+      top: 1px solid #ccc
+      bottom: 1px solid #ccc
+    background-image: url(/assets/entry_header_bg.png)
+  .content
+    .meta
+      margin-top: -12px
+      margin-bottom: 24px
+      letter-spacing: 2px
+    .content-inner
+      margin-top: 12px
+      img
+        background-color: #fff
+        border: 1px solid #ccc
+        padding: 4px
+        display: block
+        margin: auto
+      h3
+        @include single-text-shadow
+        font-weight: bold
+        margin:
+          top: 50px
+          left: -30px
+          bottom: 20px
+        &:before
+          content: "▶"
+          width: 40px
+          height: 40px
+          font-size: 11px
+          margin-right: 10px
+      h4
+        @include single-text-shadow
+        font-weight: bold
+        margin:
+          top: 30px
+          left: -5px
+      pre
+        font-size: 13px
+        background-color: #fff
+        border: 1px solid #ccc
+        padding: 12px
+        overflow: auto
+        @include border-radius
+        @include single-box-shadow(#999, 0, 1px, 3px, 0, inset)
+      .usage
+        margin-bottom: -16px
+        font-size: 90%
+      code
+        border: 1px solid #ccc
+        padding: 4px
+        background-color: #eff2ea
+      p
+        line-height: 1.8em
+      ul, ol
+        font-size: 14px
+        li
+          margin-bottom: 6px
+          margin-left: 12px
+          line-height: 1.8em
+    .next-prev
+      margin-top: 40px
+      margin-bottom: 20px
+      .next
+        margin-bottom: 20px
+        &:before
+          content: "«"
+      .prev
+        text-align: right
+        position: relative
+        right: 0px
+        &:after
+          content: "»"
+
+@mixin footer-column($column: 7, $last: false)
+  @include column($column, $last)
+  padding: 24px
+
+#footer
+  padding-top: 24px
+  font-size: 12px
+  letter-spacing: 1px
+  line-height: 1.6em
+  .footer-1
+    @include footer-column
+  .footer-2
+    @include footer-column(7)
+  .footer-3
+    @include footer-column(7, true)
+  .back-number
+    @include replace-text("/assets/back_number.png")
+    width: 148px
+    height: 27px
+    margin-bottom: 1.4em
+  .popular-entry
+    @include replace-text("/assets/popular_entry.png")
+    width: 148px
+    height: 27px
+    margin-bottom: 1.4em
+  .profile
+    @include replace-text("/assets/profile.png")
+    width: 90px
+    height: 27px
+    margin-bottom: 1.4em
+  ul
+    list-style-type: none
+  li
+    margin-bottom: 8px
+  p
+    margin-left: 12px
+  img.mah-lab
+    background-color: #fff
+    border: 1px solid #ccc
+    padding: 2px
+    vertical-align: middle
+  a:link, a:visited
+    color: #514242
+  a:hover, a:active
+    color: #865050
+    text-decoration: none
+    border-bottom: 1px dashed #514242

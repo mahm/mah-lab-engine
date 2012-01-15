@@ -93,6 +93,18 @@ class Entry
     @rel_url = "/#{four(self.date.year)}/#{two(self.date.month)}/#{two(self.date.day)}/#{self.slug}/"
   end
 
+  def publish_date
+    self.date.strftime("%Y.%m.%d")
+  end
+
+  def next
+    PopularEntry.order("publish_date ASC").where("publish_date > ?", self.date).limit(1).first
+  end
+
+  def prev
+    PopularEntry.order("publish_date DESC").where("publish_date < ?", self.date).limit(1).first
+  end
+
 private
   def four(num)
     sprintf("%04d", num)

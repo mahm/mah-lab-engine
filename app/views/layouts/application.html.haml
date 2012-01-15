@@ -5,7 +5,6 @@
     %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %title= @title
     %link{:href => "/index.xml", :rel => "alternate", :title => "#{@title} - feed", :type => "application/atom+xml"}/
-    %meta{:content => "Ruby / Rails / Vim / System Development / Pon de Lionといったことを @mah_lab が書き綴るBlogです。", :name => "description"}/
     %meta{:content => "@mah_lab", :name => "author"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}/
@@ -23,55 +22,80 @@
       }(document, 'script', 'facebook-jssdk'));
     #container
       #header
-        #header_top
-          = image_tag "rss.png"
-          = image_tag "twitter.png"
-          = image_tag "github.png"
-        #header_line
+        #header-top
+          %a{:href => "/index.xml"}
+            = image_tag "rss.png"
+          %a{:href => "http://twitter.com/mah_lab"}
+            = image_tag "twitter.png"
+          %a{:href => "http://github.com/mahm"}
+            = image_tag "github.png"
+        #header-line
 
-        #header_bottom
-          = image_tag "mah-lab_title.png"
-        #header_right_image
+        #header-bottom
+          %a{:href => "/"}
+            %h1
+              @mah_labの技術系ブログ blog.mah-lab.com
+        #header-right-image
       #main
         = yield
       #footer
         .footer-1
-          %h4 about
-          %p Ruby / Rails / Vim / System Development / Pon de Lionといったことを @mah_lab が書き綴るBlogです。「もう、Railsが動かないサーバがないなんて言わせない」でおなじみのheroku様の提供でお送りしております。
+          .profile Profile
           %p
-            タイトルのポンデライオンは
-            %a{:href => "http://twitter.com/minus13"} @minus13
-            が描いてくれました。
+            = image_tag "mah_lab.png", :class => "mah-lab"
+            西見 公宏(Nishimi Masahiro) / @mah_lab
           %p
-            powered by
-            %a{:href => "https://github.com/mahm/mah-lab-engine"} mah-lab-engine
-            on
-            %a{:href => "http://heroku.com/"} heroku
-          %h4 elsewhere
+            %a{:href => "http://www.sopnicgarden.jp"}
+              SonicGarden
+            のプログラマー。「自分の手で、ものを作り続けていきたい」そんな思いで前職を飛び出し、運良く現職に至る。主にUXデザイン、UIデザインに注力。今年の目標は10kgの減量。
+          %p
+            好きな言葉は「我々の間には、チームプレーなどという都合のよい言い訳は存在せん。有るとすればスタンドプレーから生じる、チームワークだけだ。」（by 荒巻大輔）
           %ul
             %li
-              %a{:href => "/"} index
-              \/ トップページへ戻ります
+              %a{:href => "http://twitter.com/mah_lab"} @mah_lab
+              (Twitter)
             %li
-              %a{:href => "/backnumber"} back number
-              \/ 過去の記事
-            %li
-              %a{:href => "http://twitter.com/mah_lab"} twitter
-              \/ 赤裸々すぎるtweetばかりしています
-            %li
-              %a{:href => "http://github.com/mahm"} github
-              \/ fork気味です
-            %li
-              %a{:href => "/index.xml"} rss feed
-              \/ RSSなのですよ
-          %h4 contact
-          %p ご意見・ご感想は rootmoon at gmail.com まで。お待ちしています。twitterでもお気軽にmentionを送ってください。
+              %a{:href => "http://github.com/mahm"} mahm
+              (Github)
           %p
+            Powdered by
+            %a{:href => "http://github.com/mahm/mah-lab-engine"}
+              mah-lab-engine
+            hosted on
+            %a{:href => "http://www.heroku.com"}
+              heroku
+
+        .footer-2
+          .popular-entry Popular Entry
+          %ul
+            - PopularEntry.popular_entries.each do |entry|
+              %li
+                = link_to entry.title, entry.url
+                %a{:href => "#{hatena_url(entry.url)}"}
+                  %img{:src => "http://b.hatena.ne.jp/entry/image/#{entry.url}"}
+
+        .footer-3
+          %a{:href => "backnumber"}
+            .back-number Back Numbers
+          %ul
+            - PopularEntry.order("publish_date DESC").limit(10).each do |entry|
+              %li
+                = link_to entry.title, entry.url
+                %a{:href => "#{hatena_url(entry.url)}"}
+                  %img{:src => "http://b.hatena.ne.jp/entry/image/#{entry.url}"}
+          %p
+            = link_to "and more...", "backnumber"
+
     = javascript_include_tag 'application'
     - if Rails.env.production?
-      / mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID
+      /
+        mathiasbynens.be/notes/async-analytics-snippet Change
+        UA-XXXXX-X to be your site's ID
       :javascript
         var _gaq=[["_setAccount","UA-23181159-1"],["_trackPageview"],["_trackPageLoadTime"]];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
-        g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
-        s.parentNode.insertBefore(g,s)}(document,"script"));
+        (function(d,t){
+          var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+          g.async=1;
+          g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+          s.parentNode.insertBefore(g,s)
+        }(document,"script"));

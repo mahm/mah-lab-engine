@@ -13,13 +13,19 @@ class BlogController < ApplicationController
   end
 
   def archive
-    @entries = Blog.instance.archive(params[:year], params[:month], params[:day])
-    @title = "archive - blog.mah-lab.com"
-    render :nothing => true, :status => 404 unless @entries
+    # @entries = Blog.instance.archive(params[:year], params[:month], params[:day])
+    # @title = "archive - blog.mah-lab.com"
+    # render :nothing => true, :status => 404 unless @entries
+    #
+    # Achiveページは廃止して、Backnumberページのみ提供する。
+    # 記事が増えてきたら検索ボックス、Taggingなどを追加してUIを向上させる。
+    redirect_to root_path
   end
 
   def entry
     @entry = Blog.instance.entry(params[:year], params[:month], params[:day], params[:slug])
+    @prev = @entry.prev
+    @next = @entry.next
     @title = @entry.title + " - blog.mah-lab.com"
     render :nothing => true, :status => 404 unless @entry
   end

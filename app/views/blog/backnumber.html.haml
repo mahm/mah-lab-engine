@@ -4,9 +4,4 @@
     %h2.backnumber
       #{entry.date.year}.#{entry.date.month}
     - break_key = entry.date
-    .backnumber_line
-  .content
-    %h4.backnumber
-      %a{:href => "#{entry.rel_url}"} #{entry.title}
-      %a{:href => "#{hatena_url(entry.feed_url)}"}
-        %img{:src => "http://b.hatena.ne.jp/entry/image/#{entry.feed_url}"}
+  = render :partial => "entry_summary", :locals => { :entry => entry }
