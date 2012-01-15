@@ -10,7 +10,7 @@ class PopularEntry < ActiveRecord::Base
         entry_instance = PopularEntry.find_or_initialize_by_url(entry.feed_url)
         entry_instance.title = entry.title
         entry_instance.publish_date = entry.date
-        entry_instance.bookmark_count = bookmark_count
+        entry_instance.bookmark_count = bookmark_count || 0
         entry_instance.save!
       end
     end
