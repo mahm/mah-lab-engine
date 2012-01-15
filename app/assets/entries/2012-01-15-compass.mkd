@@ -1,0 +1,140 @@
+title: Rails3.1 with Compassをherokuにdeployする
+slug: compass-with-heroku
+
+心機一転、[Compass](http://compass-style.org/)を利用してブログのデザインをリニューアルしたので、Compassのセットアップ方法と、herokuへのデプロイ時のメモを残しておきます。Compassのご紹介はまた次回に！
+
+<div style="font-size:10px;text-align: center"><a href="http://www.flickr.com/photos/calsidyrose/4925267732/" target="_blank"><img src="http://farm5.static.flickr.com/4102/4925267732_8b4a2cf887.jpg" alt="Compass Study" /></a><br />Compass Study / Calsidyrose</div>
+
+### 環境
+
+    Rails 3.1.3
+    ruby 1.9.2 p290
+
+### Compass
+
+Compassは現時点で最新のものを入れておきます。
+
+<div class="usage">Gemfileに追記</div>
+
+    gem 'compass', "~> 0.12.alpha.3"
+
+bundleしてから、次のコマンドでCompassの基本的なファイルを生成します。<code>--syntax sass</code>を指定しない場合はscssで生成されますが、Rails3.1系を使うなら迷いなくsassを使う方が良いでしょう。生成されるファイルの構成の理由については[Compass Best Practices](http://compass-style.org/help/tutorials/best_practices/)を読むとそういうものなんだなぁと分かります。
+
+<div class="usage">Railsへのセットアップ</div>
+
+    $ compass init rails --using blueprint --syntax sass
+    directory app/stylesheets/
+    directory app/stylesheets/partials/
+    directory public/images/
+    directory public/stylesheets/
+       create config/compass.rb
+       create app/stylesheets/screen.sass
+       create app/stylesheets/partials/_base.sass
+       create app/stylesheets/print.sass
+       create app/stylesheets/ie.sass
+       create public/images/grid.png
+
+    Congratulations! Your rails project has been configured to use Compass.
+    Just a couple more things left to do.
+
+    Add the following to your Gemfile:
+
+        gem "compass", ">= 0.12.alpha.3"
+
+    Then, make sure you restart your server.
+
+    Sass will automatically compile your stylesheets during the next
+    page request and keep them up to date when they change.
+
+    Now add these lines to the head of your layout(s):
+
+    <head>
+      <%= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
+      <%= stylesheet_link_tag 'print.css', :media => 'print' %>
+      <!--[if lt IE 8]><%= stylesheet_link_tag 'ie.css', :media => 'screen, projection' %><![endif]-->
+    </head>
+
+stylesheetsディレクトリはassets以下に移動しておきます。また、public/images以下に作られたgrid.pngもassets以下に移動しておきます。
+
+    $ cp -r app/stylesheets app/assets
+    $ rm -rf app/stylesheets
+    $ mv public/images/grid.png app/assets/images
+
+application.html.erbのheadタグ内に次のコードを追加。
+
+    <head>
+      <%= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
+      <%= stylesheet_link_tag 'print.css', :media => 'print' %>
+      <!--[if lt IE 8]><%= stylesheet_link_tag 'ie.css', :media => 'screen, projection' %><![endif]-->
+    </head>
+
+Hamlで書くなら以下のようにします。
+
+    %head
+      = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
+      = stylesheet_link_tag 'print.css', :media => 'print'
+      <!-- [if lt IE 8] -->
+      = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+      <!-- [endif] -->
+
+### heroku
+
+何はともあれ[heroku_san](https://github.com/fastestforward/heroku_san)をいれておきましょう。
+
+<div class="usage">Gemfileに追記</div>
+
+    gem 'heroku_san', :group => :development
+
+bundleしてからConfigファイルを作成し、Heroku Appを作成します。
+
+<div class="usage">コマンドライン</div>
+
+    $ rake heroku:create_config
+
+Rails 3.1からはCedarスタックでアプリケーションを作成する必要があります。Bambooでも運用できないことはないのですが、Compassとの組み合わせだとかなり難しいので、せめてCompassを使う場合はCedarで作った方が無難です。
+
+<div class="usage">例：このブログのheroku.yml</div>
+
+    production:
+      app: mah-lab-cedar
+      stack: cedar
+      config:
+        BUNDLE_WITHOUT: "development:test"
+        TZ: "Asia/Tokyo"
+
+    staging:
+      app: mah-lab-cedar-staging
+      stack: cedar
+      config: &default
+        BUNDLE_WITHOUT: "development:test"
+        TZ: "Asia/Tokyo"
+
+<div class="usage">コマンドライン</div>
+
+    $ rake all heroku:create heroku:rack_env
+    $ rake all heroku:config
+
+既にBambooスタックで運用しているアプリケーションをCedarに移行する場合、Heroku側で移行する仕組みは用意されていないため、DBを手動で移行する必要があります。（[heroku db:pullとpushを使う](http://d.hatena.ne.jp/ruedap/20110222/ruby_heroku_database_sqlite3_download_upload)等）
+
+アプリケーションを作成してherokuにデプロイする前に、以下の作業をします。
+
+<div class="usage">必要なGemfileの追加</div>
+
+    group :production do
+      gem 'pg'
+      gem 'therubyracer'
+    end
+
+<div class="usage">sqlite3がproductionでbundleされないようにする</div>
+
+    gem 'sqlite3', :group => :development, :test
+
+<div class="usage">config/environments/production.rbのconfig.assets.compileの値を以下の通り変更する</div>
+
+    config.assets.compile = true
+
+後はheroku_sanが上手いことデプロイしてくれます。
+
+    $ rake staging deploy
+
+このブログは実際にRails3.1 + Compassの構成で作成しているので、[このブログのソースコード](http://github.com/mahm/mah-lab-engine)を見て頂くのでも良いと思います。
