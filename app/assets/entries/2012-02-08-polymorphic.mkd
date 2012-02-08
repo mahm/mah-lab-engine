@@ -1,0 +1,43 @@
+title: 【メモ】ActiveRecordでポリモーフィック関連しているモデルクラスを取得する
+slug: rails-polymorphic
+
+ポリモーフィック関連しているクラスに対して共通のメソッドを投げて返してもらう処理を書きたかったのですが、妙に泥臭くなった上にGoogleでもひっかからなかったのでブログで共有します。もっとマシな方法募集中。
+
+### 環境
+
+    Rails 3.1.1
+    ruby 1.9.2 p290
+
+### Railsプロジェクト内のモデルクラスを取得する
+
+ActiveRecord::Baseを継承しているクラスから絞り込む方法もありますが、ロードされていないクラスを取得することができない弱点があってよろしくありません。ここは一つテーブル名からクラスを取得する方法でアプローチしようと思います。
+
+以下のコードで取得できます。
+
+    def model_classes
+      ActiveRecord::Base.connection.tables.map do |table|
+        Object.const_get(table.classify) rescue nil
+      end.compact
+    end
+
+### ポリモーフィック関連しているクラスを絞り込む
+
+ポリモーフィック関連は以下のように定義するので、以下のような定義のあるクラスを持ってくるコードを書きます。
+
+<div class="usage">ポリモーフィック関連コード例</div>
+
+    has_one :part, :as => :instanceable
+
+<div class="usage">絞り込む</div>
+
+    def polymorphic_classes(relationship, polymorphic)
+      model_classes.select do |model|
+        model.reflections[relationship] && model.reflections[relationship].options[:as] == polymorphic
+      end
+    end
+
+    # 使用例
+    polymorphic_classes(:part, :instanceable)
+    # => [Content(id: integer, ...)]
+
+ちょっと力技なのでよりよい方法を知っている方がいれば教えて下さい！
