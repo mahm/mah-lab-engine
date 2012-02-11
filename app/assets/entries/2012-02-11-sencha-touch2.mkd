@@ -1,7 +1,7 @@
 title: 社内でsencha touch2勉強会を開催しました
 slug: sencha-touch2
 
-先日社内でsencha touch2の勉強会を開催しましたので、説明用のスライドをアップします。
+先日社内で[sencha touch2](http://docs.sencha.com/touch/2-0/)の勉強会を開催しましたので、説明用のスライドをアップします。
 
 <a href="http://docs.sencha.com/touch/2-0/"><img src="/assets/2012_02/sencha-touch2.png" width="500" /></a>
 
