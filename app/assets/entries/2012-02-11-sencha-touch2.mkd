@@ -1,0 +1,28 @@
+title: 社内でsencha touch2勉強会を開催しました
+slug: sencha-touch2
+
+先日社内でsencha touch2の勉強会を開催しましたので、説明用のスライドをアップします。
+
+<a href="http://docs.sencha.com/touch/2-0/"><img src="/assets/2012_02/sencha-touch2.png" width="500" /></a>
+
+### スライド
+
+<a title="View Sencha Touch2 preview on Scribd" href="http://www.scribd.com/doc/81245456/Sencha-Touch2-preview" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">Sencha Touch2 preview</a><iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/81245456/content?start_page=1&view_mode=slideshow&access_key=key-2ggbn4ix1zrotf4epjib" data-auto-height="true" data-aspect-ratio="1.33333333333333" scrolling="no" id="doc_32970" width="100%" height="600" frameborder="0"></iframe><script type="text/javascript">(function() { var scribd = document.createElement("script"); scribd.type = "text/javascript"; scribd.async = true; scribd.src = "http://www.scribd.com/javascripts/embed_code/inject.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(scribd, s); })();</script>
+
+### 勉強会の様子
+
+勉強会というよりは実際にモバイル向けサービスの開発に使えるかどうか？みたいな部分が焦点でした。結果としては、「やっぱりフレームワークとして重厚すぎる気がするよね」という感じで、もっと軽量なモバイル向けフレームワークを模索する形になりました。ExtJSにロックインされる印象があるためです。
+
+更に技術選定のポイントとして、以下のような観点が挙がりました。
+
+* 複雑なUIを伴うか？（例えば[youRoom](http://youroom.in/)ではコメントがネストするUIなので、デフォルトのUIではUXに難があります）
+* 将来的にiPhoneアプリにする予定があるか？
+* モバイル機器のネイティブなAPIを使用する予定があるか？
+
+ネイティブなAPIを使用する予定があるなら、PhoneGapと親和性が良い技術を選定した方が良いということになります。複雑なUIを伴う場合は、そもそもフルスタックなフレームワークを導入したところで、結局自分たちで作りこまなければならない事になるため、フレームワークを学習するコストに見合うかが問題となります。
+
+ルーティングやイベントハンドリングについては十分に良いライブラリがあるので、UIの部分だけ良い感じに補ってくれるライブラリはないかな、という話にもなりました。Twitter Bootstrapのモバイル版があればいろいろ解決しそうだよね、と。ないものですかね。
+
+そんな訳でモバイル向けアプリケーションを生産性高く開発する方法について、現在ガンガン模索中です。ヒントをお持ちの方、是非教えて下さいー！
+
+（こんな事情もあって、デブサミはスマホ系セッションをメインに見に行きます。何か良いヒントが得られれば良いなぁ）

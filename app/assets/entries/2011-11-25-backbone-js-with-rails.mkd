@@ -3,7 +3,7 @@ slug: backbone-js-with-rails
 
 backbone.js + Rails3.1で作成したサイト「best vimrc」を題材にSonicGarden社内で勉強会を開催しました。ustreamされながら話すのは緊張しますねー。。
 
-<a href="http://best-vimrc.heroku.com"><img src="/assets/best-vimrc.png" width="500" /></a>
+<a href="http://best-vimrc.heroku.com"><img src="/assets/2011_11/best-vimrc.png" width="500" /></a>
 
 結果的に「クライアントサイドのコードを無理にMVCで書く理由が分からない。もっとシンプルで分かりやすいアーキテクチャがあるのでは？」という話に落ち着きましたが、サーバ側がRailsでフルAjaxなアプリを作る際には、backbone.js + Railsはgemが充実しているので良い選択肢なのかなという気がしています。
 
