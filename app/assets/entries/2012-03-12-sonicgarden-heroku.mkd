@@ -1,4 +1,4 @@
-title: SonicGardenにおけるherokuでのサービス運用プラクティス
+title: SonicGardenにおけるherokuでのサービス運用構成
 slug: sonicgarden-heroku
 
 SonicGardenではいくつかのサービスを[heroku](http://www.heroku.com/)で本番運用しています。herokuはステージング用途で利用されこそすれ、本番環境として運用されている話はあまり見かけないと思いますので、どんな構成で運用しているのかご紹介したいと思います。
