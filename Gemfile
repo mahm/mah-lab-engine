@@ -34,6 +34,7 @@ gem 'erb2haml', :group => :development
 gem 'compass', "~> 0.12.alpha.3"
 
 gem 'heroku_san', :group => :development
+gem 'newrelic_rpm'
 
 group :test do
   # Pretty printed test output
