@@ -127,7 +127,7 @@ Rails 3.1からはCedarスタックでアプリケーションを作成する必
 
 <div class="usage">sqlite3がproductionでbundleされないようにする</div>
 
-    gem 'sqlite3', :group => :development, :test
+    gem 'sqlite3', :group => [:development, :test]
 
 <div class="usage">config/environments/production.rbのconfig.assets.compileの値を以下の通り変更する</div>
 
