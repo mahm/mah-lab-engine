@@ -120,10 +120,7 @@ Rails 3.1からはCedarスタックでアプリケーションを作成する必
 
 <div class="usage">必要なGemfileの追加</div>
 
-    group :production do
-      gem 'pg'
-      gem 'therubyracer'
-    end
+    gem 'pg', :group => [:production]
 
 <div class="usage">sqlite3がproductionでbundleされないようにする</div>
 
