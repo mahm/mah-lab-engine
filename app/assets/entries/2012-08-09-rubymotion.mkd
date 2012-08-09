@@ -1,0 +1,12 @@
+title: RubyMotion勉強会でnitronについて話してみた
+slug: rubymotion-nitron
+
+先日7/22（日）に[第1回RubyMotion勉強会](http://connpass.com/event/665/)で[nitronというRubyMotion向けGem](https://github.com/HipByte/RubyMotion)についてLTしましたので、そのスライドを公開します。
+
+### スライド
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/13917939" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/rootmoon/rubymotion-lt-nitronios" title="[RubyMotion LT] nitronに見るiosアプリ開発の未来" target="_blank">[RubyMotion LT] nitronに見るiosアプリ開発の未来</a> </strong> from <strong><a href="http://www.slideshare.net/rootmoon" target="_blank">Masahiro Nishimi</a></strong> </div>
+
+### 勉強会の様子
+
+30人前後の熱狂的なRubyMotionファンが集まり、日本のRubyMotion熱の高まりを感じました！　僕のRubyMotionに対する熱い思いも語りつくしましたし、[海老沢さんの見事AppStore無料トップを獲得したRubyMotion製アプリ](http://itunes.apple.com/jp/app/batteri-by-dapan/id538707566?mt=8)に続いて、更に多くのアプリがRubyMotionによって作られることを期待しています！
