@@ -1,23 +1,20 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 # for heroku Deploy
-group :production do
-  gem 'pg'
-  gem 'execjs'
-  gem 'therubyracer'
-end
+gem 'pg', group: :production
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier'
+  gem 'compass-rails'
 end
 
 gem 'jquery-rails'
@@ -31,7 +28,7 @@ gem 'rdiscount'
 gem 'coderay'
 
 gem 'erb2haml', :group => :development
-gem 'compass', "~> 0.12.alpha.3"
+# gem 'compass', "~> 0.12.alpha.3"
 
 gem 'heroku_san', :group => :development
 gem 'newrelic_rpm'
