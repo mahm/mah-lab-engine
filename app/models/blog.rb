@@ -7,14 +7,14 @@ class Blog
   attr_reader :entries
 
   # when you test this class, change this class variable
-  @@basepath = "/app/assets/entries/"
+  @@basepath = [Rails.root, "entries"].join("/")
   def source_directory
-    Dir::pwd + @@basepath
+    @@basepath
   end
 
   def initialize
     @entries = []
-    Dir.glob(source_directory + "*.mkd").each do |filename|
+    Dir.glob([source_directory, "*.mkd"].join("/")).each do |filename|
       @entries << create_entry(filename)
     end
   end
@@ -40,9 +40,9 @@ class Blog
   def entry(year, month, day, slug)
     return nil unless check_year(year) && check_month(month) && check_day(day) && check_slug(slug)
     entry_date = Date.new(year.to_i, month.to_i, day.to_i)
-    entry = @entries.select {|entry| entry.date == entry_date && entry.slug == slug}
-    return nil if entry.size != 1
-    entry.pop
+    selected_entry = @entries.select {|entry| entry.date == entry_date && entry.slug == slug}
+    return nil if selected_entry.size != 1
+    selected_entry.pop
   end
 
   def backnumber
