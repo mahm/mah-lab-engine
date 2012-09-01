@@ -101,4 +101,5 @@
           g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
           s.parentNode.insertBefore(g,s)
         }(document,"script"));
-    %script{:type => "text/javascript", :src => "https://www.messageleaf.jp/javascripts/messageleaf.js"}
+    - if controller.action_name == "entry"
+      %script{:type => "text/javascript", :src => "https://www.messageleaf.jp/javascripts/messageleaf.js"}
