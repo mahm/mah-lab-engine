@@ -15,6 +15,7 @@
 $default-text-shadow-blur: 3px
 $default-text-shadow-v-offset: 1px
 
+
 body
   background-image: url(/assets/footer_bg.gif)
   color: #796e6e - #444
@@ -37,6 +38,7 @@ body.two-col
   $content-grid: $blueprint-grid-columns - $sidebar-grid * 2 - $bookmark-grid
   #container
     @include container
+    min-width: 320px
     text-align: left
   #header, #main, #footer
     @include column($blueprint-grid-columns)
