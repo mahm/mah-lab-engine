@@ -16,6 +16,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
   gem 'compass-rails'
+  gem 'zurui-sass-rails'
 end
 
 gem 'jquery-rails'

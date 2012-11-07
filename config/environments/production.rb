@@ -17,9 +17,6 @@ BlogMahLabCom::Application.configure do
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
 
-  # Don't initialize on precompile
-  config.assets.initialize_on_precompile = false
-
   # Generate digests for assets URLs
   config.assets.digest = true
 

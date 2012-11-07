@@ -1,0 +1,64 @@
+title: Railsプログラマはこれを入れればすぐにズルいデザインをはじめられます！
+slug: zurui-design-for-rails
+
+先日のプログラマ向けデザイン勉強会で発表された[「少ない手間と知識で"それなり"に見せる、ズルいデザインテクニック」](https://speakerdeck.com/ken_c_lo/zurui-design)（by [赤塚さん](https://twitter.com/ken_c_lo)）の中に書かれていたSassのMixinをRailsで使えるGemにしてみました。
+
+- zurui-sass-rails: [https://github.com/mahm/zurui-sass-rails](https://github.com/mahm/zurui-sass-rails)
+- sample: [http://zurui-sample.herokuapp.com/](http://zurui-sample.herokuapp.com/)
+
+<blockquote class="twitter-tweet tw-align-center" lang="ja"><p>うおおずるい！ｗ RT @<a href="https://twitter.com/mah_lab">mah_lab</a>: .@<a href="https://twitter.com/ken_c_lo">ken_c_lo</a> さんのズルいデザインをGemにしてみました。 <a href="https://t.co/Vn8QK9NY" title="https://github.com/mahm/zurui-sass-rails">github.com/mahm/zurui-sas…</a> サンプルはこちら <a href="http://t.co/nEaZ3bdH" title="http://zurui-sample.herokuapp.com/">zurui-sample.herokuapp.com</a> (based on <a href="https://t.co/FJqyU3D3" title="https://github.com/machida/CustomizedTwitterBootstrap">github.com/machida/Custom…</a>)</p>&mdash; TAEさん (@ken_c_lo) <a href="https://twitter.com/ken_c_lo/status/266057185652523008" data-datetime="2012-11-07T05:59:10+00:00">11月 7, 2012</a></blockquote>
+
+<blockquote class="twitter-tweet tw-align-center" data-in-reply-to="266052930703085568" lang="ja"><p>@<a href="https://twitter.com/mah_lab">mah_lab</a> ありがとうございます！！これはズルい！先に作られたｗｗ 今日から使わせていただきます(ΦωΦ)</p>&mdash; TAEさん (@ken_c_lo) <a href="https://twitter.com/ken_c_lo/status/266058231749685248" data-datetime="2012-11-07T06:03:20+00:00">11月 7, 2012</a></blockquote>
+
+<blockquote class="twitter-tweet tw-align-center" lang="ja"><p>デザインもうまくてずるいプログラマの@<a href="https://twitter.com/mah_lab">mah_lab</a> さんが最後に全部もってったｗ</p>&mdash; TAEさん (@ken_c_lo) <a href="https://twitter.com/ken_c_lo/status/266060227982548992" data-datetime="2012-11-07T06:11:16+00:00">11月 7, 2012</a></blockquote>
+<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+そういう訳で今日から「ズルいプログラマ」を名乗りますね！（キリッ
+
+### Getting Start
+
+恐らく[サンプルページのソースコード](https://github.com/mahm/zurui-sample)を見て頂くのが一番てっとり早いです。Rails3.1以上が対象です。
+
+<div class="usage">Gemfile</div>
+
+    group :assets do
+      # ...
+      gem 'compass-rails'
+      gem "zurui-sass-rails"
+    end
+
+<div class="usage">application.css</div>
+
+    /*
+     *= require base
+     */
+
+<div class="usage">base.css.sass</div>
+
+    @import compass/utilities
+    @import compass/css3
+    @import zurui-sass
+
+これだけの準備をすれば、すぐにズルいデザインをはじめられます。とはいえ、ズルいデザインはパーツ単位のTipsなので、[CustomizedTwitterBootstrap](https://github.com/machida/CustomizedTwitterBootstrap)（by [町田さん](https://twitter.com/machida)）といったズルい土台から利用していくのが良いと思います。
+
+### Tips
+
+サンプルでは書いていないのですが、用意しているMixinには引数が設定できまして、シチュエーションに応じてちょろっと引数を足さないとあんまりズルくなりません。Twitter Bootstrapの色合いだと以下のような感じが良いかも知れませんね。サンプルでも以下のような値を使用しています。
+
+    // Zurui line
+    @include zurui-line-top(.1, 1.0)
+    @include zurui-line-right(.1, 1.0)
+    @include zurui-line-left(.1, 1.0)
+    @include zurui-line-bottom(.1, 1.0)
+
+    // Zurui font-shadow
+    @include zurui-ts-000(.1)
+    @include zurui-ts-fff(.1)
+
+    // Zurui box-shadow
+    @include zurui-box-deboss(.1, .4, .7)
+    @include zurui-box-emboss(.1, .2, .7)
+
+### Welcome to your PULL REQUEST!
+
+そういうわけで皆様のPull Requestをお待ちしております。Happy Hacking!

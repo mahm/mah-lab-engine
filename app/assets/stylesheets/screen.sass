@@ -9,6 +9,7 @@
 @import "blueprint/liquid"
 @import "compass/css3"
 @import "compass/typography/text/replacement"
+@import zurui-sass
 
 @include blueprint
 
@@ -166,7 +167,7 @@ body.two-col
         padding: 12px
         overflow: auto
         @include border-radius
-        @include single-box-shadow(#999, 0, 1px, 3px, 0, inset)
+        @include zurui-box-deboss(.1, .4, .7)
       .usage
         margin-bottom: -16px
         font-size: 90%
