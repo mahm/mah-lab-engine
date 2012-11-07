@@ -15,7 +15,7 @@ slug: zurui-design-for-rails
 
 そういう訳で今日から「ズルいプログラマ」を名乗りますね！（キリッ
 
-### Getting Start
+### Getting Started
 
 恐らく[サンプルページのソースコード](https://github.com/mahm/zurui-sample)を見て頂くのが一番てっとり早いです。Rails3.1以上が対象です。
 
